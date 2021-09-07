@@ -35,8 +35,11 @@ public class FPSCamera : MonoBehaviour
 
     void Update()
     {
-        CameraFollowMouse();
-        Raycast();
+        if (!PauseMenu._isInPause)
+        {
+            CameraFollowMouse();
+            Raycast();
+        }
     }
 
     void LoadSensivity()
@@ -101,10 +104,11 @@ public class FPSCamera : MonoBehaviour
     {
         RaycastHit hit;
         Debug.DrawRay(transform.position, transform.forward * rangePlayer);
-        if (Input.GetMouseButton(0))
-        { 
+        if (Input.GetMouseButtonDown(0))
+        {
             if (Physics.Raycast(transform.position, transform.forward, out hit, rangePlayer, layerInteractable))
             {
+                AudioManager.instance.Play3DSound("SoundTest", hit.point);
             }
         }
     }
