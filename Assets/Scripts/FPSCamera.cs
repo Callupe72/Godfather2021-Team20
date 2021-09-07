@@ -108,7 +108,6 @@ public class FPSCamera : MonoBehaviour
         {
             if (Physics.Raycast(transform.position, transform.forward, out hit, rangePlayer, layerInteractable))
             {
-                AudioManager.instance.Play3DSound("SoundTest", hit.point);
             }
         }
     }

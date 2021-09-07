@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerWeapon : MonoBehaviour
@@ -13,7 +11,7 @@ public class PlayerWeapon : MonoBehaviour
     public float lifeTime = 3;
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -30,8 +28,7 @@ public class PlayerWeapon : MonoBehaviour
     {
         GameObject bullet = Instantiate(bulletPrefab);
 
-        Physics.IgnoreCollision(bullet.GetComponent<Collider>(),
-            bulletSpawn.parent.GetComponent<Collider>());
+        //Physics.IgnoreCollision(bullet.GetComponent<Collider>(), bulletSpawn.parent.GetComponent<Collider>());
 
         bullet.transform.position = bulletSpawn.position;
 
@@ -41,14 +38,7 @@ public class PlayerWeapon : MonoBehaviour
 
         bullet.GetComponent<Rigidbody>().AddForce(bulletSpawn.forward * bulletSpeed, ForceMode.Impulse);
 
-        StartCoroutine(DestroyBulletAfterTime(bullet, lifeTime));
+        Destroy(bullet, lifeTime);
 
-    }
-
-    private IEnumerator DestroyBulletAfterTime(GameObject bullet, float delay)
-    {
-        yield return new WaitForSeconds(delay);
-
-        Destroy(bullet);
     }
 }
