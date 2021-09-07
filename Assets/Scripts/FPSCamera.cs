@@ -61,11 +61,28 @@ public class FPSCamera : MonoBehaviour
     {
         PlayerPrefs.SetFloat("xMouseSensivity", xSlider.value);
         PlayerPrefs.SetFloat("yMouseSensivity", ySlider.value);
+        ActualiseSensivityText();
     }
 
     public void ActualiseSensivityText()
     {
+        xSliderText.text = xMouseSensivity.ToString();
+        ySliderText.text = yMouseSensivity.ToString();
+    }
 
+    public void ResetSensivity(bool xSensivity)
+    {
+        if (xSensivity)
+        {
+            xMouseSensivity = 50;
+            xSlider.value = xMouseSensivity;
+        }
+        else
+        {
+            yMouseSensivity = 50f;
+            ySlider.value = yMouseSensivity;
+        }
+        SaveSensivity();
     }
 
     void CameraFollowMouse()
