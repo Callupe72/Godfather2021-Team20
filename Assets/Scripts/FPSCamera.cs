@@ -35,8 +35,11 @@ public class FPSCamera : MonoBehaviour
 
     void Update()
     {
-        CameraFollowMouse();
-        Raycast();
+        if (!PauseMenu._isInPause)
+        {
+            CameraFollowMouse();
+            Raycast();
+        }
     }
 
     void LoadSensivity()
@@ -61,11 +64,28 @@ public class FPSCamera : MonoBehaviour
     {
         PlayerPrefs.SetFloat("xMouseSensivity", xSlider.value);
         PlayerPrefs.SetFloat("yMouseSensivity", ySlider.value);
+        ActualiseSensivityText();
     }
 
     public void ActualiseSensivityText()
     {
+        xSliderText.text = xMouseSensivity.ToString();
+        ySliderText.text = yMouseSensivity.ToString();
+    }
 
+    public void ResetSensivity(bool xSensivity)
+    {
+        if (xSensivity)
+        {
+            xMouseSensivity = 50;
+            xSlider.value = xMouseSensivity;
+        }
+        else
+        {
+            yMouseSensivity = 50f;
+            ySlider.value = yMouseSensivity;
+        }
+        SaveSensivity();
     }
 
     void CameraFollowMouse()
@@ -84,10 +104,11 @@ public class FPSCamera : MonoBehaviour
     {
         RaycastHit hit;
         Debug.DrawRay(transform.position, transform.forward * rangePlayer);
-        if (Input.GetMouseButton(0))
-        { 
+        if (Input.GetMouseButtonDown(0))
+        {
             if (Physics.Raycast(transform.position, transform.forward, out hit, rangePlayer, layerInteractable))
             {
+                AudioManager.instance.Play3DSound("SoundTest", hit.point);
             }
         }
     }

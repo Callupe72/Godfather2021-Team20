@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class PauseMenu : MonoBehaviour
 {
-    bool _isInPause = false;
+    public static bool _isInPause = false;
     public GameObject pauseMenu;
 
     void Start()
