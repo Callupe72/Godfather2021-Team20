@@ -18,7 +18,7 @@ public class PlayerWeapon : MonoBehaviour
     void Update()
 
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetMouseButtonDown(0))
         {
             Fire();
         }

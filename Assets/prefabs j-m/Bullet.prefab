@@ -127,4 +127,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ballType: 0
   bounceStrengh: 50
-  stunTime: 0
+  explosionRadius: 0.1
+  upwardModifier: -1
+  stunTime: 2
