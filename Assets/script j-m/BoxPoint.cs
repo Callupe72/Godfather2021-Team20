@@ -2,10 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class KeepScore : MonoBehaviour
+public class BoxPoint : MonoBehaviour
 {
-
-    public static int Score = 500;
     // Start is called before the first frame update
     void Start()
     {
@@ -17,9 +15,12 @@ public class KeepScore : MonoBehaviour
     {
         
     }
-
-    private void OnGUI()
+    private void OnCollisionEnter(Collision collision)
     {
-        GUI.Box(new Rect(100, 100, 100, 100), Score.ToString());
+        if(collision.transform.name == "Prise")
+        {
+            KeepScore.Score -= 10;
+            Destroy(gameObject);
+        }
     }
 }
