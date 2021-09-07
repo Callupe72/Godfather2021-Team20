@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -28,10 +27,15 @@ public class BabyMovement : MonoBehaviour
 
         transform.LookAt(coin[wichCoin].transform);
 
-        Vector3 dir = coinPosition;
-        dir = new Vector3(dir.x, 0, dir.z);
 
-        rb.velocity = dir * speed;
+        rb.velocity = coinPosition * speed;
+
+        RaycastHit hit;
+        Debug.DrawRay(transform.position, Vector3.down * 100);
+        if (Physics.Raycast(transform.position, Vector3.down, out hit, 100))
+        {
+            transform.position = new Vector3(transform.position.x, hit.point.y + 1, transform.position.z);
+        }
     }
 
     private void OnTriggerEnter(Collider other)

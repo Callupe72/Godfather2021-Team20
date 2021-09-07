@@ -554,13 +554,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3fd34cd5d822b442b861041994bca83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mouseSensitivity: 1000
+  mouseSensitivity: 20
   playerBody: {fileID: 966575508}
   head: {fileID: 2110067703}
   rangePlayer: 0
   layerInteractable:
     serializedVersion: 2
     m_Bits: 0
+  xSlider: {fileID: 0}
+  ySlider: {fileID: 0}
+  xSliderText: {fileID: 0}
+  ySliderText: {fileID: 0}
 --- !u!81 &710413281
 AudioListener:
   m_ObjectHideFlags: 0
@@ -1275,11 +1279,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8038434815787371709, guid: 7d93e2d07d0e83549b38eafed9bc2519, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.7071068
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8038434815787371709, guid: 7d93e2d07d0e83549b38eafed9bc2519, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.7071068
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8038434815787371709, guid: 7d93e2d07d0e83549b38eafed9bc2519, type: 3}
       propertyPath: m_LocalRotation.y
@@ -1291,7 +1295,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8038434815787371709, guid: 7d93e2d07d0e83549b38eafed9bc2519, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 90
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8038434815787371709, guid: 7d93e2d07d0e83549b38eafed9bc2519, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
