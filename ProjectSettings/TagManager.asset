@@ -9,6 +9,7 @@ TagManager:
   - Wall
   - Center
   - Phone
+  - Desk
   layers:
   - Default
   - TransparentFX

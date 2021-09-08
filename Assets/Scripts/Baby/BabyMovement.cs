@@ -42,7 +42,8 @@ public class BabyMovement : MonoBehaviour
     Animator anim;
 
     [Header("Desk")]
-    public PathCreator pathCreator;
+    public PathCreator pathCreatorOnDesk;
+    public PathCreator pathCreatorGoOnDesk;
     public float speedOnDesk = 5f;
     float distanceTravelled;
     public enum CollisionResult
@@ -65,7 +66,6 @@ public class BabyMovement : MonoBehaviour
 
     void Start()
     {
-        pathCreator = FindObjectOfType<PathCreator>();
         anim = GetComponent<Animator>();
         meshRenderer = GetComponent<MeshRenderer>();
         RandomRotation();
@@ -112,13 +112,7 @@ public class BabyMovement : MonoBehaviour
             if (nearestCorner == null && collisionResult == CollisionResult.none)
                 distanceToSeeCorner += speedIncreaseView / 10 * Time.deltaTime;
         }
-
-        if(collisionResult == CollisionResult.onDesk)
-        {
-            distanceTravelled += speed * Time.deltaTime;
-            transform.position = pathCreator.path.GetPointAtDistance(distanceTravelled);
-            transform.rotation = pathCreator.path.GetRotationAtDistance(distanceTravelled);
-        }
+        WalkOnDesk();
 
         if (collisionResult == CollisionResult.fight && babiesFight.Count == 0)
             collisionResult = CollisionResult.none;
@@ -322,7 +316,18 @@ public class BabyMovement : MonoBehaviour
 
     void WalkOnDesk()
     {
-
+        if (collisionResult == CollisionResult.onDesk)
+        {
+            distanceTravelled += speed * Time.deltaTime;
+            transform.position = pathCreatorGoOnDesk.path.GetPointAtDistance(distanceTravelled);
+            transform.rotation = pathCreatorGoOnDesk.path.GetRotationAtDistance(distanceTravelled);
+            transform.rotation = Quaternion.Euler(0,transform.rotation.eulerAngles.y + 180,0);
+            if (distanceTravelled > 8 && pathCreatorGoOnDesk != pathCreatorOnDesk)
+            {
+                distanceTravelled = 0;
+                pathCreatorGoOnDesk = pathCreatorOnDesk;
+            }
+        }
     }
 
     void Carry(GameObject other)
@@ -361,6 +366,13 @@ public class BabyMovement : MonoBehaviour
                 goingToCenter = false;
                 WillIChangeTarget();
             }
+        }
+
+        if (other.gameObject.CompareTag("Desk"))
+        {
+            collisionResult = CollisionResult.onDesk;
+            pathCreatorOnDesk = GameObject.Find("OnDeskPath").GetComponent<PathCreator>();
+            pathCreatorGoOnDesk = GameObject.Find("GoOnDeskPath").GetComponent<PathCreator>();
         }
     }
 }
