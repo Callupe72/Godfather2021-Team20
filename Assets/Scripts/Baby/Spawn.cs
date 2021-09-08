@@ -15,15 +15,14 @@ public class Spawn : MonoBehaviour
     public void SpawnABaby()
     {
         wichspawnPoint = Random.Range(0, spawnPoint.Length);
-        Debug.Log(wichspawnPoint);
         GameObject babyInstance = Instantiate(baby, spawnPoint[wichspawnPoint].transform.position, spawnPoint[wichspawnPoint].transform.rotation);
 
         BabyMovement babyMove = babyInstance.GetComponent<BabyMovement>();
-        babyMove.coin.Clear();
+        babyMove.corners.Clear();
 
         for (int i = 0; i < allcoin.transform.childCount; i++)
         {
-            babyMove.coin.Add(allcoin.transform.GetChild(i).transform.gameObject);
+            babyMove.corners.Add(allcoin.transform.GetChild(i).transform.gameObject);
         }
     }
 }

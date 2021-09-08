@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 831420247317373602}
   m_Layer: 0
   m_Name: Baby
-  m_TagString: Untagged
+  m_TagString: Baby
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -127,7 +127,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 16
+  m_Constraints: 80
   m_CollisionDetection: 0
 --- !u!114 &831420247317373602
 MonoBehaviour:
@@ -142,9 +142,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 9041446125442608895}
-  coin:
+  corners:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  cornersAvailable: []
   speed: 3
+  speedSeingCorner: 2
+  wantToDie: 0
+  hasToChangeDir: 0
+  secondsBeforeChangingTargetMin: 3
+  secondsBeforeChangingTargetMax: 8
+  distanceToSeeCorner: 10
+  speedIncreaseView: 5
+  isStun: 0
+  stunMat: {fileID: 2100000, guid: 5a26de236ce89e94b963be8fa2b7ade6, type: 2}
+  originalMat: {fileID: 2100000, guid: f6298605825d7154f8923c76872aa46e, type: 2}
+  seeACorner: {fileID: 2100000, guid: c852af001dae0064e9acaa832f1dadb7, type: 2}
