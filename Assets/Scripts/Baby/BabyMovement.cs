@@ -17,7 +17,7 @@ public class BabyMovement : MonoBehaviour
 
     [Header("Condition")]
     [SerializeField] bool wantToDie = false;
-    [HideInInspector] public GameObject nearestCorner = null;
+    public GameObject nearestCorner = null;
     GameObject previousCorner = null;
     [SerializeField] bool hasToChangeDir;
     public float secondsBeforeChangingTargetMin = 0.5f;
@@ -28,11 +28,23 @@ public class BabyMovement : MonoBehaviour
 
     [Header("Stun")]
     [HideInInspector] public bool isStun;
-    public Material stunMat;
-    public Material originalMat;
-    public Material seeACorner;
     MeshRenderer meshRenderer;
     public bool goingToCenter;
+
+    [Header("Bagarre")]
+    public float timeBeforeDying = 5f;
+    public CollisionResult collisionResult;
+    public List<BabyMovement> babiesFight = new List<BabyMovement>();
+    [HideInInspector] public bool doNotNeedToThink;
+    public enum CollisionResult
+    {
+        none,
+        fight,
+        carry,
+    }
+
+    [Tooltip("Chance de 0 à la valeur")] [Range(0, 100)] public int fightPercentage = 20;
+    [Tooltip("Chance de la valeur précédente à celle-ci")] [Range(0, 100)] public int carryPercentage = 50;
 
     void OnDrawGizmos()
     {
@@ -75,16 +87,37 @@ public class BabyMovement : MonoBehaviour
         {
             Movement();
             GoToGround();
-            if (nearestCorner == null)
+            if (nearestCorner == null && collisionResult == CollisionResult.none)
                 distanceToSeeCorner += speedIncreaseView / 10 * Time.deltaTime;
+        }
+
+        if (collisionResult == CollisionResult.fight && babiesFight.Count == 0)
+            collisionResult = CollisionResult.none;
+
+        if (transform.rotation.eulerAngles.x != 0)
+        {
+            transform.rotation = Quaternion.Euler(90, transform.rotation.eulerAngles.y, 0);
         }
     }
 
     public void Hit(float stunTime)
     {
+        if (collisionResult == CollisionResult.fight)
+        {
+            if (!doNotNeedToThink)
+            {
+                for (int i = 0; i < babiesFight.Count; i++)
+                {
+                    babiesFight[i].doNotNeedToThink = true;
+                    babiesFight[i].collisionResult = CollisionResult.none;
+                }
+                collisionResult = CollisionResult.none;
+            }
+        }
+        babiesFight.Clear();
         previousCorner = nearestCorner;
         nearestCorner = null;
-        meshRenderer.material = stunMat;
+        doNotNeedToThink = false;
         StopAllCoroutines();
         isStun = true;
         StartCoroutine(HitTime(stunTime));
@@ -94,7 +127,6 @@ public class BabyMovement : MonoBehaviour
     {
         yield return new WaitForSeconds(stunTime);
         isStun = false;
-        meshRenderer.material = originalMat;
         if (nearestCorner == null)
             WillIChangeTarget();
         else
@@ -142,7 +174,6 @@ public class BabyMovement : MonoBehaviour
                         cornersAvailable.Add(previousCorner);
                         previousCorner = null;
                     }
-                    meshRenderer.material = seeACorner;
                     return;
                 }
             }
@@ -161,7 +192,6 @@ public class BabyMovement : MonoBehaviour
                         cornersAvailable.Add(previousCorner);
                         previousCorner = null;
                     }
-                    meshRenderer.material = seeACorner;
                     return;
                 }
             }
@@ -175,12 +205,15 @@ public class BabyMovement : MonoBehaviour
 
     void Movement()
     {
+        if (collisionResult != CollisionResult.none)
+            return;
+
         if (!goingToCenter)
         {
             if (nearestCorner == null)
                 rb.velocity = positionToGo * speed;
             else
-                rb.velocity = positionToGo * (speedSeingCorner / 10);
+                rb.velocity = positionToGo * speedSeingCorner / 10;
         }
         else
         {
@@ -194,17 +227,81 @@ public class BabyMovement : MonoBehaviour
         Debug.DrawRay(transform.position, Vector3.down * 100);
         if (Physics.Raycast(transform.position, Vector3.down, out hit, 100))
         {
-            transform.position = new Vector3(transform.position.x, hit.point.y + 1, transform.position.z);
+            transform.position = new Vector3(transform.position.x, hit.point.y + 0.2f, transform.position.z);
         }
     }
 
     void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Wall") || collision.gameObject.CompareTag("Baby"))
+        if (collision.gameObject.CompareTag("Wall"))
         {
-            if (nearestCorner == null)
-                WillIChangeTarget();
+            StopAllCoroutines();
+            RandomRotation();
         }
+
+        if (collision.gameObject.CompareTag("Baby"))
+        {
+            StopAllCoroutines();
+            if (collisionResult != CollisionResult.none)
+                return;
+
+            if (nearestCorner != null || collision.gameObject.GetComponent<BabyMovement>().nearestCorner != null)
+                return;
+
+            if (collision.gameObject.GetComponent<BabyMovement>().collisionResult == CollisionResult.fight)
+            {
+                Fight(collision.gameObject);
+            }
+            else
+            {
+                if (transform.position.x + transform.position.z > collision.transform.position.x + collision.transform.position.z)
+                {
+                    int random = Random.Range(0, 100);
+
+                    if (random < fightPercentage)
+                    {
+                        Fight(collision.gameObject);
+                    }
+                    else if (random > fightPercentage && random < carryPercentage)
+                    {
+                        Carry(collision.gameObject);
+                    }
+                    else
+                    {
+                        if (nearestCorner == null)
+                            WillIChangeTarget();
+                    }
+                }
+            }
+
+        }
+    }
+
+    void Carry(GameObject other)
+    {
+        collisionResult = CollisionResult.carry;
+        other.GetComponent<BabyMovement>().collisionResult = CollisionResult.carry;
+    }
+
+    void Fight(GameObject other)
+    {
+        collisionResult = CollisionResult.fight;
+        babiesFight.Add(other.GetComponent<BabyMovement>());
+        other.GetComponent<BabyMovement>().babiesFight.Add(GetComponent<BabyMovement>());
+        other.GetComponent<BabyMovement>().collisionResult = CollisionResult.fight;
+        transform.LookAt(other.transform.position);
+        other.transform.LookAt(transform.position);
+        StartCoroutine(FightDie(other));
+    }
+
+    IEnumerator FightDie(GameObject other)
+    {
+        yield return new WaitForSeconds(timeBeforeDying);
+        FindObjectOfType<Spawn>().SpawnABaby();
+        FindObjectOfType<Spawn>().SpawnABaby();
+        Destroy(other);
+        Destroy(gameObject);
+
     }
 
     void OnTriggerEnter(Collider other)
