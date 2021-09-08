@@ -30,15 +30,21 @@ public class FPSCamera : MonoBehaviour
     void Start()
     {
         LoadSensivity();
-        Cursor.lockState = CursorLockMode.Locked;
+        if (playerBody != null)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+        }
     }
 
     void Update()
     {
         if (!PauseMenu._isInPause)
         {
-            CameraFollowMouse();
-            Raycast();
+            if (playerBody != null)
+            {
+                CameraFollowMouse();
+                Raycast();
+            }
         }
     }
 

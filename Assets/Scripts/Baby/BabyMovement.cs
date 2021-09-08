@@ -17,7 +17,7 @@ public class BabyMovement : MonoBehaviour
 
     [Header("Condition")]
     [SerializeField] bool wantToDie = false;
-    GameObject nearestCorner = null;
+    [HideInInspector] public GameObject nearestCorner = null;
     GameObject previousCorner = null;
     [SerializeField] bool hasToChangeDir;
     public float secondsBeforeChangingTargetMin = 0.5f;
