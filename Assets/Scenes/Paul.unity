@@ -398,6 +398,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9041446125442608895, guid: 7d93e2d07d0e83549b38eafed9bc2519, type: 3}
+      propertyPath: m_Mass
+      value: 0.75
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7d93e2d07d0e83549b38eafed9bc2519, type: 3}
 --- !u!1 &110193103
@@ -753,6 +757,7 @@ GameObject:
   - component: {fileID: 138303481}
   - component: {fileID: 138303480}
   - component: {fileID: 138303479}
+  - component: {fileID: 138303482}
   m_Layer: 0
   m_Name: Coin (2)
   m_TagString: Coin
@@ -837,6 +842,20 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 138303477}
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &138303482
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 138303477}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2530157e410cf0f44ab7ceb2b308c270, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cornerRadius: 2.25
+  timeBeforeKill: 0.1
 --- !u!1 &165011859
 GameObject:
   m_ObjectHideFlags: 0
@@ -1407,6 +1426,7 @@ GameObject:
   - component: {fileID: 529727115}
   - component: {fileID: 529727114}
   - component: {fileID: 529727113}
+  - component: {fileID: 529727116}
   m_Layer: 0
   m_Name: Coin
   m_TagString: Coin
@@ -1491,6 +1511,20 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 529727111}
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &529727116
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 529727111}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2530157e410cf0f44ab7ceb2b308c270, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cornerRadius: 2.25
+  timeBeforeKill: 0.1
 --- !u!1 &541981497
 GameObject:
   m_ObjectHideFlags: 0
@@ -1993,6 +2027,10 @@ PrefabInstance:
     - target: {fileID: 8038434815787371709, guid: 7d93e2d07d0e83549b38eafed9bc2519, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9041446125442608895, guid: 7d93e2d07d0e83549b38eafed9bc2519, type: 3}
+      propertyPath: m_Mass
+      value: 0.75
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7d93e2d07d0e83549b38eafed9bc2519, type: 3}
@@ -2570,6 +2608,10 @@ PrefabInstance:
     - target: {fileID: 8038434815787371709, guid: 7d93e2d07d0e83549b38eafed9bc2519, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9041446125442608895, guid: 7d93e2d07d0e83549b38eafed9bc2519, type: 3}
+      propertyPath: m_Mass
+      value: 0.75
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7d93e2d07d0e83549b38eafed9bc2519, type: 3}
@@ -3400,6 +3442,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9041446125442608895, guid: 7d93e2d07d0e83549b38eafed9bc2519, type: 3}
+      propertyPath: m_Mass
+      value: 0.75
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7d93e2d07d0e83549b38eafed9bc2519, type: 3}
 --- !u!1 &1358101800
@@ -3489,6 +3535,7 @@ GameObject:
   - component: {fileID: 1398581801}
   - component: {fileID: 1398581800}
   - component: {fileID: 1398581799}
+  - component: {fileID: 1398581802}
   m_Layer: 0
   m_Name: Coin (1)
   m_TagString: Coin
@@ -3573,6 +3620,20 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1398581797}
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1398581802
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1398581797}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2530157e410cf0f44ab7ceb2b308c270, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cornerRadius: 2.25
+  timeBeforeKill: 0.1
 --- !u!1 &1415187867
 GameObject:
   m_ObjectHideFlags: 0
@@ -4366,6 +4427,7 @@ GameObject:
   - component: {fileID: 1565307330}
   - component: {fileID: 1565307329}
   - component: {fileID: 1565307328}
+  - component: {fileID: 1565307331}
   m_Layer: 0
   m_Name: Coin (3)
   m_TagString: Coin
@@ -4450,6 +4512,20 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1565307326}
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1565307331
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1565307326}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2530157e410cf0f44ab7ceb2b308c270, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cornerRadius: 2.25
+  timeBeforeKill: 1
 --- !u!1 &1571700611
 GameObject:
   m_ObjectHideFlags: 0
@@ -6645,6 +6721,10 @@ PrefabInstance:
     - target: {fileID: 8038434815787371709, guid: 7d93e2d07d0e83549b38eafed9bc2519, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9041446125442608895, guid: 7d93e2d07d0e83549b38eafed9bc2519, type: 3}
+      propertyPath: m_Mass
+      value: 0.75
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7d93e2d07d0e83549b38eafed9bc2519, type: 3}
