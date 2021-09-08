@@ -138,8 +138,8 @@ MonoBehaviour:
   wantToDie: 0
   nearestCorner: {fileID: 0}
   hasToChangeDir: 0
-  secondsBeforeChangingTargetMin: 1
-  secondsBeforeChangingTargetMax: 1
+  secondsBeforeChangingTargetMin: 5
+  secondsBeforeChangingTargetMax: 10
   distanceToSeeCorner: 10
   speedIncreaseView: 1
   isStun: 0

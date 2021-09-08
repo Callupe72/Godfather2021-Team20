@@ -175,6 +175,11 @@ MonoBehaviour:
   bulletSpawn: {fileID: 1271463201}
   bulletSpeed: 75
   lifeTime: 3
+  maxTimeLoad: 1
+  gun: {fileID: 276049432}
+  cam: {fileID: 1172593903}
+  camMultiplier: 10
+  postProcess: {fileID: 1782702141}
 --- !u!136 &8295816
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -2702,14 +2707,6 @@ PrefabInstance:
       propertyPath: corners.Array.data[3]
       value: 
       objectReference: {fileID: 1565307326}
-    - target: {fileID: 831420247317373602, guid: 7d93e2d07d0e83549b38eafed9bc2519, type: 3}
-      propertyPath: secondsBeforeChangingTargetMax
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 831420247317373602, guid: 7d93e2d07d0e83549b38eafed9bc2519, type: 3}
-      propertyPath: secondsBeforeChangingTargetMin
-      value: 5
-      objectReference: {fileID: 0}
     - target: {fileID: 2487059775396055081, guid: 7d93e2d07d0e83549b38eafed9bc2519, type: 3}
       propertyPath: m_Name
       value: Baby (8)
@@ -2757,10 +2754,6 @@ PrefabInstance:
     - target: {fileID: 8038434815787371709, guid: 7d93e2d07d0e83549b38eafed9bc2519, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9041446125442608895, guid: 7d93e2d07d0e83549b38eafed9bc2519, type: 3}
-      propertyPath: m_Mass
-      value: 0.75
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7d93e2d07d0e83549b38eafed9bc2519, type: 3}
