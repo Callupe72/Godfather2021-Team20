@@ -20,6 +20,7 @@ public class Corners : MonoBehaviour
             if (item.gameObject.CompareTag("Baby"))
             {
                 Destroy(item);
+                item.GetComponent<Rigidbody>().isKinematic = true;
                 Destroy(item.gameObject, timeBeforeKill);
                 FindObjectOfType<Spawn>().SpawnABaby();
                 //Score

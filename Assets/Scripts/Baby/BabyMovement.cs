@@ -46,12 +46,18 @@ public class BabyMovement : MonoBehaviour
     public PathCreator pathCreatorGoOnDesk;
     public float speedOnDesk = 5f;
     float distanceTravelled;
+
+    [Header("FollowBall")]
+    public float distanceFollowBall = 5f;
+    public float speedFollowBall = 3f;
+    Transform footballTransform;
     public enum CollisionResult
     {
         none,
         fight,
         carry,
         onDesk,
+        followBall,
     }
 
     [Tooltip("Chance de 0 à la valeur")] [Range(0, 100)] public int fightPercentage = 20;
@@ -62,6 +68,10 @@ public class BabyMovement : MonoBehaviour
         Color alphaBlue = new Vector4(Color.blue.r, Color.blue.g, Color.blue.b, 0.25f);
         Gizmos.color = alphaBlue;
         Gizmos.DrawWireSphere(transform.position, distanceToSeeCorner);
+
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(transform.position, distanceFollowBall);
+
     }
 
     void Start()
@@ -105,17 +115,33 @@ public class BabyMovement : MonoBehaviour
                 Die();
         }
 
-        if (!isStun && collisionResult != CollisionResult.onDesk)
-        {
-            Movement();
-            GoToGround();
-            if (nearestCorner == null && collisionResult == CollisionResult.none)
-                distanceToSeeCorner += speedIncreaseView / 10 * Time.deltaTime;
-        }
-        WalkOnDesk();
+        if (collisionResult != CollisionResult.followBall)
+            DetectBall();
 
-        if (collisionResult == CollisionResult.fight && babiesFight.Count == 0)
-            collisionResult = CollisionResult.none;
+        if (!isStun)
+        {
+            switch (collisionResult)
+            {
+                case CollisionResult.none:
+                    Movement();
+                    GoToGround();
+                    if (nearestCorner == null && collisionResult == CollisionResult.none)
+                        distanceToSeeCorner += speedIncreaseView / 10 * Time.deltaTime;
+                    break;
+                case CollisionResult.fight:
+                    if (babiesFight.Count == 0)
+                        collisionResult = CollisionResult.none;
+                    break;
+                case CollisionResult.carry:
+                    break;
+                case CollisionResult.onDesk:
+                    WalkOnDesk();
+                    break;
+                case CollisionResult.followBall:
+                    RunningAfterBall();
+                    break;
+            }
+        }
 
         if (transform.rotation.eulerAngles.x != 0)
         {
@@ -129,6 +155,28 @@ public class BabyMovement : MonoBehaviour
                 RandomRotationOnAWall();
         }
 
+    }
+
+    void DetectBall()
+    {
+        foreach (Collider item in Physics.OverlapSphere(transform.position, distanceFollowBall))
+        {
+            if (item.gameObject.CompareTag("Football"))
+            {
+                if (item.GetComponent<Rigidbody>().velocity.magnitude > 5f)
+                {
+                    collisionResult = CollisionResult.followBall;
+                    if (footballTransform == null)
+                        footballTransform = item.transform;
+                }
+            }
+        }
+    }
+
+    void RunningAfterBall()
+    {
+        transform.position = Vector3.MoveTowards(transform.position, footballTransform.position, Time.deltaTime * speedFollowBall * phone.actualModifierSpeed);
+        transform.LookAt(footballTransform.position);
     }
 
     void Die()
@@ -257,7 +305,10 @@ public class BabyMovement : MonoBehaviour
             if (nearestCorner == null)
                 rb.velocity = positionToGo * speed * phone.actualModifierSpeed;
             else
-                rb.velocity = positionToGo * speedSeingCorner / 10 * phone.actualModifierSpeed;
+            {
+                transform.position = Vector3.MoveTowards(transform.position, positionToGo, speedSeingCorner / 10 * Time.deltaTime * phone.actualModifierSpeed);
+                transform.LookAt(positionToGo);
+            }
         }
         else
         {
@@ -316,17 +367,14 @@ public class BabyMovement : MonoBehaviour
 
     void WalkOnDesk()
     {
-        if (collisionResult == CollisionResult.onDesk)
+        distanceTravelled += speed * Time.deltaTime;
+        transform.position = pathCreatorGoOnDesk.path.GetPointAtDistance(distanceTravelled);
+        transform.rotation = pathCreatorGoOnDesk.path.GetRotationAtDistance(distanceTravelled);
+        transform.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y + 180, 0);
+        if (distanceTravelled > 8 && pathCreatorGoOnDesk != pathCreatorOnDesk)
         {
-            distanceTravelled += speed * Time.deltaTime;
-            transform.position = pathCreatorGoOnDesk.path.GetPointAtDistance(distanceTravelled);
-            transform.rotation = pathCreatorGoOnDesk.path.GetRotationAtDistance(distanceTravelled);
-            transform.rotation = Quaternion.Euler(0,transform.rotation.eulerAngles.y + 180,0);
-            if (distanceTravelled > 8 && pathCreatorGoOnDesk != pathCreatorOnDesk)
-            {
-                distanceTravelled = 0;
-                pathCreatorGoOnDesk = pathCreatorOnDesk;
-            }
+            distanceTravelled = 0;
+            pathCreatorGoOnDesk = pathCreatorOnDesk;
         }
     }
 
