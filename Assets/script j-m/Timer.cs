@@ -1,31 +1,48 @@
-using System.Collections;
-using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class Timer : MonoBehaviour
 {
     float timeRemaining = 3;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
+    public float minutes;
+    public float seconds;
+    public TextMeshProUGUI timerText;
+    public string currentText = "Time Remaining :";
+    public string winningText = "You Won !";
+    bool timerPlay = true;
     void Update()
     {
-        timeRemaining -= Time.deltaTime;
-                
+        if (!timerPlay)
+            return;
+
+
+        seconds -= Time.deltaTime;
+        Debug.Log(seconds);
+
+        if (seconds > 9)
+            timerText.text = currentText + " 0" + (int)minutes + " : " + (int)seconds;
+        else
+            timerText.text = currentText + " 0" + (int)minutes + " : 0" + (int)seconds;
+        if (seconds < 0)
+        {
+            seconds = 60;
+            minutes--;
+        }
+        if (minutes < 0)
+        {
+            timerText.text = winningText;
+            timerPlay = false;
+            return;
+        }
+
     }
     private void OnGUI()
     {
-        if(timeRemaining > 0)
+        if (timeRemaining > 0)
         {
-            GUI.Label(new Rect(580, 10, 200, 100), "TEMPS RESTANT : " + (int)timeRemaining);
         }
         else
         {
-            GUI.Label(new Rect(610, 10, 100, 100), "GAGNER");
         }
     }
 }
