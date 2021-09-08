@@ -23,16 +23,20 @@ public class BulletBehaviour : MonoBehaviour
             Rigidbody babyRb = other.gameObject.GetComponent<Rigidbody>();
             babyRb.velocity = Vector3.zero;
             babyRb.AddExplosionForce(bounceStrengh * 10, transform.position, explosionRadius, upwardModifier * 10);
-        
+
         }
-            switch (ballType)
-            {
-                case BallType.destroyable:
-                    Destroy(gameObject);
-                    break;
-                case BallType.bouncy:
-                    break;
-            }
+        else if (other.gameObject.CompareTag("Phone"))
+        {
+            other.gameObject.GetComponent<Phone>().Hit();
+        }
+        switch (ballType)
+        {
+            case BallType.destroyable:
+                Destroy(gameObject);
+                break;
+            case BallType.bouncy:
+                break;
+        }
 
     }
 }

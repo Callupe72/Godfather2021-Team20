@@ -153,6 +153,36 @@ Transform:
   m_Father: {fileID: 8324000096504348223}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1133624474187323574
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7371339088732136738}
+  m_Layer: 0
+  m_Name: SeeWall
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7371339088732136738
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1133624474187323574}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.646, z: 0.692}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2731533277565316284}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1203451907341740992
 GameObject:
   m_ObjectHideFlags: 0
@@ -386,7 +416,7 @@ GameObject:
   - component: {fileID: 919132147506370335}
   m_Layer: 0
   m_Name: "b\xE9b\xE9"
-  m_TagString: Untagged
+  m_TagString: Baby
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -404,6 +434,7 @@ Transform:
   m_Children:
   - {fileID: 146861006339134949}
   - {fileID: 7617849522529373224}
+  - {fileID: 7371339088732136738}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -421,7 +452,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 80
+  m_Constraints: 112
   m_CollisionDetection: 2
 --- !u!95 &2477791742555781138
 Animator:
@@ -435,7 +466,7 @@ Animator:
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 6443594b82b464d45be4437503da2ad4, type: 2}
   m_CullingMode: 0
-  m_UpdateMode: 0
+  m_UpdateMode: 1
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_WarningMessage: 
@@ -454,15 +485,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 329079fe24b41a04badb6e3a62a99138, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rb: {fileID: 0}
+  rb: {fileID: 2477791742555781140}
   corners:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   cornersAvailable: []
-  speed: 3
+  speed: 10
   speedSeingCorner: 2
+  seeWall: {fileID: 7371339088732136738}
   wantToDie: 0
   nearestCorner: {fileID: 0}
   hasToChangeDir: 0
@@ -471,10 +503,13 @@ MonoBehaviour:
   distanceToSeeCorner: 10
   speedIncreaseView: 1
   isStun: 0
-  stunMat: {fileID: 2100000, guid: 5a26de236ce89e94b963be8fa2b7ade6, type: 2}
-  originalMat: {fileID: 2100000, guid: f6298605825d7154f8923c76872aa46e, type: 2}
-  seeACorner: {fileID: 2100000, guid: c852af001dae0064e9acaa832f1dadb7, type: 2}
   goingToCenter: 0
+  timeBeforeDying: 5
+  collisionResult: 0
+  babiesFight: []
+  doNotNeedToThink: 0
+  fightPercentage: 100
+  carryPercentage: 100
 --- !u!136 &919132147506370335
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -485,10 +520,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 2.0000005
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Radius: 0.51
+  m_Height: 1.7654102
+  m_Direction: 2
+  m_Center: {x: 0, y: 0.19999999, z: 0.06310189}
 --- !u!1 &3528450674683444410
 GameObject:
   m_ObjectHideFlags: 0

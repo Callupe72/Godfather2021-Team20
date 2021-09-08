@@ -1,3 +1,4 @@
+using PathCreation;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,6 +15,7 @@ public class BabyMovement : MonoBehaviour
     [SerializeField] float speed = 3f;
     [SerializeField] float speedSeingCorner = 3f;
     private Vector3 positionToGo;
+    public Transform seeWall;
 
     [Header("Condition")]
     [SerializeField] bool wantToDie = false;
@@ -25,6 +27,7 @@ public class BabyMovement : MonoBehaviour
     public float distanceToSeeCorner = 2f;
     float distanceActualDestination;
     public float speedIncreaseView = 10;
+    public Phone phone;
 
     [Header("Stun")]
     [HideInInspector] public bool isStun;
@@ -36,11 +39,18 @@ public class BabyMovement : MonoBehaviour
     public CollisionResult collisionResult;
     public List<BabyMovement> babiesFight = new List<BabyMovement>();
     [HideInInspector] public bool doNotNeedToThink;
+    Animator anim;
+
+    [Header("Desk")]
+    public PathCreator pathCreator;
+    public float speedOnDesk = 5f;
+    float distanceTravelled;
     public enum CollisionResult
     {
         none,
         fight,
         carry,
+        onDesk,
     }
 
     [Tooltip("Chance de 0 à la valeur")] [Range(0, 100)] public int fightPercentage = 20;
@@ -55,14 +65,18 @@ public class BabyMovement : MonoBehaviour
 
     void Start()
     {
+        pathCreator = FindObjectOfType<PathCreator>();
+        anim = GetComponent<Animator>();
         meshRenderer = GetComponent<MeshRenderer>();
         RandomRotation();
         StartCoroutine(ChangingTarget());
         cornersAvailable = corners;
+        phone = FindObjectOfType<Phone>();
     }
 
     void Update()
     {
+
         //Si le bebe change de dir et veut die
         //if (hasToChangeDir && wantToDie)
         //{
@@ -83,7 +97,15 @@ public class BabyMovement : MonoBehaviour
         //    transform.LookAt(coin[wichCoin].transform);
         //}
 
-        if (!isStun)
+        //anim.SetFloat("Speed", rb.velocity.magnitude);
+
+        for (int i = 0; i < babiesFight.Count; i++)
+        {
+            if (babiesFight[i] == null)
+                Die();
+        }
+
+        if (!isStun && collisionResult != CollisionResult.onDesk)
         {
             Movement();
             GoToGround();
@@ -91,13 +113,33 @@ public class BabyMovement : MonoBehaviour
                 distanceToSeeCorner += speedIncreaseView / 10 * Time.deltaTime;
         }
 
+        if(collisionResult == CollisionResult.onDesk)
+        {
+            distanceTravelled += speed * Time.deltaTime;
+            transform.position = pathCreator.path.GetPointAtDistance(distanceTravelled);
+            transform.rotation = pathCreator.path.GetRotationAtDistance(distanceTravelled);
+        }
+
         if (collisionResult == CollisionResult.fight && babiesFight.Count == 0)
             collisionResult = CollisionResult.none;
 
         if (transform.rotation.eulerAngles.x != 0)
         {
-            transform.rotation = Quaternion.Euler(90, transform.rotation.eulerAngles.y, 0);
+            transform.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0);
         }
+
+
+        foreach (Collider item in Physics.OverlapSphere(seeWall.position, 1f))
+        {
+            if (item.gameObject.CompareTag("Wall"))
+                RandomRotationOnAWall();
+        }
+
+    }
+
+    void Die()
+    {
+        Destroy(gameObject);
     }
 
     public void Hit(float stunTime)
@@ -114,6 +156,8 @@ public class BabyMovement : MonoBehaviour
                 collisionResult = CollisionResult.none;
             }
         }
+        if (collisionResult == CollisionResult.onDesk)
+            collisionResult = CollisionResult.none;
         babiesFight.Clear();
         previousCorner = nearestCorner;
         nearestCorner = null;
@@ -146,6 +190,12 @@ public class BabyMovement : MonoBehaviour
         float yRotation = Random.Range(0, 360);
         Vector3 transformEular = transform.rotation.eulerAngles;
         transform.rotation = Quaternion.Euler(new Vector3(transformEular.x, yRotation, transformEular.z));
+        positionToGo = transform.TransformDirection(Vector3.forward);
+    }
+    void RandomRotationOnAWall()
+    {
+        Vector3 transformEular = transform.rotation.eulerAngles;
+        transform.rotation = Quaternion.Euler(new Vector3(transformEular.x, transform.rotation.eulerAngles.y + 180, transformEular.z));
         positionToGo = transform.TransformDirection(Vector3.forward);
     }
 
@@ -211,13 +261,13 @@ public class BabyMovement : MonoBehaviour
         if (!goingToCenter)
         {
             if (nearestCorner == null)
-                rb.velocity = positionToGo * speed;
+                rb.velocity = positionToGo * speed * phone.actualModifierSpeed;
             else
-                rb.velocity = positionToGo * speedSeingCorner / 10;
+                rb.velocity = positionToGo * speedSeingCorner / 10 * phone.actualModifierSpeed;
         }
         else
         {
-            rb.velocity = positionToGo * (speedSeingCorner / 10);
+            rb.velocity = positionToGo * (speedSeingCorner / 10 * phone.actualModifierSpeed);
         }
     }
 
@@ -227,18 +277,12 @@ public class BabyMovement : MonoBehaviour
         Debug.DrawRay(transform.position, Vector3.down * 100);
         if (Physics.Raycast(transform.position, Vector3.down, out hit, 100))
         {
-            transform.position = new Vector3(transform.position.x, hit.point.y + 0.2f, transform.position.z);
+            transform.position = new Vector3(transform.position.x, hit.point.y + 0.25f, transform.position.z);
         }
     }
 
     void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Wall"))
-        {
-            StopAllCoroutines();
-            RandomRotation();
-        }
-
         if (collision.gameObject.CompareTag("Baby"))
         {
             StopAllCoroutines();
@@ -258,11 +302,11 @@ public class BabyMovement : MonoBehaviour
                 {
                     int random = Random.Range(0, 100);
 
-                    if (random < fightPercentage)
+                    if (random < fightPercentage * phone.actualModifierFight)
                     {
                         Fight(collision.gameObject);
                     }
-                    else if (random > fightPercentage && random < carryPercentage)
+                    else if (random > fightPercentage * phone.actualModifierFight && random < carryPercentage * phone.actualModifierFight)
                     {
                         Carry(collision.gameObject);
                     }
@@ -273,8 +317,12 @@ public class BabyMovement : MonoBehaviour
                     }
                 }
             }
-
         }
+    }
+
+    void WalkOnDesk()
+    {
+
     }
 
     void Carry(GameObject other)
