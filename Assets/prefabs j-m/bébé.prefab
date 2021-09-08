@@ -383,9 +383,10 @@ GameObject:
   - component: {fileID: 2477791742555781140}
   - component: {fileID: 2477791742555781138}
   - component: {fileID: 2477791742555781141}
+  - component: {fileID: 5842808006236766376}
   m_Layer: 0
   m_Name: "b\xE9b\xE9"
-  m_TagString: Untagged
+  m_TagString: Baby
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -420,7 +421,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!95 &2477791742555781138
 Animator:
@@ -453,23 +454,44 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 329079fe24b41a04badb6e3a62a99138, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rb: {fileID: 2477791742555781140}
-  corners: []
+  rb: {fileID: 0}
+  corners:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   cornersAvailable: []
   speed: 3
-  speedSeingCorner: 4
+  speedSeingCorner: 2
   wantToDie: 0
   nearestCorner: {fileID: 0}
   hasToChangeDir: 0
-  secondsBeforeChangingTargetMin: 3
-  secondsBeforeChangingTargetMax: 3
-  distanceToSeeCorner: 2
-  speedIncreaseView: 10
+  secondsBeforeChangingTargetMin: 5
+  secondsBeforeChangingTargetMax: 10
+  distanceToSeeCorner: 10
+  speedIncreaseView: 20
   isStun: 0
-  stunMat: {fileID: 0}
-  originalMat: {fileID: 0}
-  seeACorner: {fileID: 0}
   goingToCenter: 0
+  timeBeforeDying: 5
+  collisionResult: 0
+  babiesFight: []
+  doNotNeedToThink: 0
+  fightPercentage: 100
+  carryPercentage: 100
+--- !u!136 &5842808006236766376
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3360683299407148550}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.5
+  m_Height: 2.0000005
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &3528450674683444410
 GameObject:
   m_ObjectHideFlags: 0

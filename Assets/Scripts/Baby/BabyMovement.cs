@@ -28,9 +28,6 @@ public class BabyMovement : MonoBehaviour
 
     [Header("Stun")]
     [HideInInspector] public bool isStun;
-    public Material stunMat;
-    public Material originalMat;
-    public Material seeACorner;
     MeshRenderer meshRenderer;
     public bool goingToCenter;
 
@@ -99,7 +96,7 @@ public class BabyMovement : MonoBehaviour
 
         if (transform.rotation.eulerAngles.x != 0)
         {
-            transform.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0);
+            transform.rotation = Quaternion.Euler(90, transform.rotation.eulerAngles.y, 0);
         }
     }
 
@@ -120,7 +117,6 @@ public class BabyMovement : MonoBehaviour
         babiesFight.Clear();
         previousCorner = nearestCorner;
         nearestCorner = null;
-        meshRenderer.material = stunMat;
         doNotNeedToThink = false;
         StopAllCoroutines();
         isStun = true;
@@ -131,7 +127,6 @@ public class BabyMovement : MonoBehaviour
     {
         yield return new WaitForSeconds(stunTime);
         isStun = false;
-        meshRenderer.material = originalMat;
         if (nearestCorner == null)
             WillIChangeTarget();
         else
@@ -179,7 +174,6 @@ public class BabyMovement : MonoBehaviour
                         cornersAvailable.Add(previousCorner);
                         previousCorner = null;
                     }
-                    meshRenderer.material = seeACorner;
                     return;
                 }
             }
@@ -198,7 +192,6 @@ public class BabyMovement : MonoBehaviour
                         cornersAvailable.Add(previousCorner);
                         previousCorner = null;
                     }
-                    meshRenderer.material = seeACorner;
                     return;
                 }
             }
@@ -234,7 +227,7 @@ public class BabyMovement : MonoBehaviour
         Debug.DrawRay(transform.position, Vector3.down * 100);
         if (Physics.Raycast(transform.position, Vector3.down, out hit, 100))
         {
-            transform.position = new Vector3(transform.position.x, hit.point.y + 1, transform.position.z);
+            transform.position = new Vector3(transform.position.x, hit.point.y + 0.2f, transform.position.z);
         }
     }
 
