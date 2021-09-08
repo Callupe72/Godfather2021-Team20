@@ -20,7 +20,7 @@ public class Corners : MonoBehaviour
             if (item.gameObject.CompareTag("Baby"))
             {
                 Destroy(item.gameObject, timeBeforeKill);
-                FindObjectOfType<Spawn>().SpawnABaby();
+                //FindObjectOfType<Spawn>().SpawnABaby();
                 //Score
             }
         }
