@@ -15,7 +15,6 @@ public class Spawn : MonoBehaviour
     public void SpawnABaby()
     {
         wichspawnPoint = Random.Range(0, spawnPoint.Length);
-        Debug.Log(wichspawnPoint);
         GameObject babyInstance = Instantiate(baby, spawnPoint[wichspawnPoint].transform.position, spawnPoint[wichspawnPoint].transform.rotation);
 
         BabyMovement babyMove = babyInstance.GetComponent<BabyMovement>();

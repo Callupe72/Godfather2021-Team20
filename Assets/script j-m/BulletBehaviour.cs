@@ -21,6 +21,7 @@ public class BulletBehaviour : MonoBehaviour
         {
             other.gameObject.GetComponent<BabyMovement>().Hit(stunTime);
             Rigidbody babyRb = other.gameObject.GetComponent<Rigidbody>();
+            babyRb.velocity = Vector3.zero;
             babyRb.AddExplosionForce(bounceStrengh * 10, transform.position, explosionRadius, upwardModifier * 10);
         
         }

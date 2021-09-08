@@ -7,15 +7,18 @@ public class BabyMovement : MonoBehaviour
     [Header("Component")]
     [SerializeField] Rigidbody rb;
     public List<GameObject> corners = new List<GameObject>();
+    public List<GameObject> cornersAvailable = new List<GameObject>();
     int wichCoin;
 
     [Header("Movement")]
-    [SerializeField] float speed;
+    [SerializeField] float speed = 3f;
+    [SerializeField] float speedSeingCorner = 3f;
     private Vector3 positionToGo;
 
     [Header("Condition")]
     [SerializeField] bool wantToDie = false;
-    public GameObject nearestCorner = null;
+    GameObject nearestCorner = null;
+    GameObject previousCorner = null;
     [SerializeField] bool hasToChangeDir;
     public float secondsBeforeChangingTargetMin = 0.5f;
     public float secondsBeforeChangingTargetMax = 3f;
@@ -27,7 +30,9 @@ public class BabyMovement : MonoBehaviour
     [HideInInspector] public bool isStun;
     public Material stunMat;
     public Material originalMat;
+    public Material seeACorner;
     MeshRenderer meshRenderer;
+    public bool goingToCenter;
 
     void OnDrawGizmos()
     {
@@ -41,6 +46,7 @@ public class BabyMovement : MonoBehaviour
         meshRenderer = GetComponent<MeshRenderer>();
         RandomRotation();
         StartCoroutine(ChangingTarget());
+        cornersAvailable = corners;
     }
 
     void Update()
@@ -69,15 +75,16 @@ public class BabyMovement : MonoBehaviour
         {
             Movement();
             GoToGround();
+            if (nearestCorner == null)
+                distanceToSeeCorner += speedIncreaseView / 10 * Time.deltaTime;
         }
-        distanceToSeeCorner += speedIncreaseView / 10 * Time.deltaTime;
-
     }
 
     public void Hit(float stunTime)
     {
+        previousCorner = nearestCorner;
+        nearestCorner = null;
         meshRenderer.material = stunMat;
-        rb.velocity = Vector3.zero;
         StopAllCoroutines();
         isStun = true;
         StartCoroutine(HitTime(stunTime));
@@ -89,7 +96,17 @@ public class BabyMovement : MonoBehaviour
         isStun = false;
         meshRenderer.material = originalMat;
         if (nearestCorner == null)
-            StartCoroutine(ChangingTarget());
+            WillIChangeTarget();
+        else
+            GoToCenter();
+    }
+
+    void GoToCenter()
+    {
+        StopAllCoroutines();
+        goingToCenter = true;
+        Vector3 oppositeDir = -transform.position;
+        positionToGo = new Vector3(oppositeDir.x, transform.position.y, oppositeDir.z) * (speedSeingCorner / 10);
     }
 
     void RandomRotation()
@@ -111,26 +128,40 @@ public class BabyMovement : MonoBehaviour
         if (nearestCorner != null)
         {
             distanceActualDestination = Vector3.Distance(nearestCorner.transform.position, transform.position);
-            for (int i = 0; i < corners.Count; i++)
+            for (int i = 0; i < cornersAvailable.Count; i++)
             {
 
                 //If he finds closer
-                if (Vector3.Distance(corners[i].transform.position, transform.position) > distanceActualDestination)
+                if (Vector3.Distance(cornersAvailable[i].transform.position, transform.position) > distanceActualDestination)
                 {
-                    nearestCorner = corners[i];
+                    nearestCorner = cornersAvailable[i];
                     positionToGo = nearestCorner.transform.position;
+                    cornersAvailable.RemoveAt(i);
+                    if (previousCorner != null)
+                    {
+                        cornersAvailable.Add(previousCorner);
+                        previousCorner = null;
+                    }
+                    meshRenderer.material = seeACorner;
                     return;
                 }
             }
         }
         else
         {
-            for (int i = 0; i < corners.Count; i++)
+            for (int i = 0; i < cornersAvailable.Count; i++)
             {
-                if (Vector3.Distance(corners[i].transform.position, transform.position) < distanceToSeeCorner)
+                if (Vector3.Distance(cornersAvailable[i].transform.position, transform.position) < distanceToSeeCorner)
                 {
-                    nearestCorner = corners[i];
+                    nearestCorner = cornersAvailable[i];
                     positionToGo = nearestCorner.transform.position;
+                    cornersAvailable.RemoveAt(i);
+                    if (previousCorner != null)
+                    {
+                        cornersAvailable.Add(previousCorner);
+                        previousCorner = null;
+                    }
+                    meshRenderer.material = seeACorner;
                     return;
                 }
             }
@@ -144,7 +175,17 @@ public class BabyMovement : MonoBehaviour
 
     void Movement()
     {
-        rb.velocity = positionToGo * speed;
+        if (!goingToCenter)
+        {
+            if (nearestCorner == null)
+                rb.velocity = positionToGo * speed;
+            else
+                rb.velocity = positionToGo * (speedSeingCorner / 10);
+        }
+        else
+        {
+            rb.velocity = positionToGo * (speedSeingCorner / 10);
+        }
     }
 
     void GoToGround()
@@ -157,11 +198,24 @@ public class BabyMovement : MonoBehaviour
         }
     }
 
+    void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Wall") || collision.gameObject.CompareTag("Baby"))
+        {
+            if (nearestCorner == null)
+                WillIChangeTarget();
+        }
+    }
+
     void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Coin")
+        if (goingToCenter)
         {
-            Destroy(gameObject);
+            if (other.gameObject.CompareTag("Center"))
+            {
+                goingToCenter = false;
+                WillIChangeTarget();
+            }
         }
     }
 }

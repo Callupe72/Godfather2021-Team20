@@ -147,14 +147,16 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  cornersAvailable: []
   speed: 3
+  speedSeingCorner: 2
   wantToDie: 0
-  nearestCorner: {fileID: 0}
   hasToChangeDir: 0
-  secondsBeforeChangingTargetMin: 1
-  secondsBeforeChangingTargetMax: 1
-  distanceToSeeCorner: 11
-  speedIncreaseView: 10
+  secondsBeforeChangingTargetMin: 3
+  secondsBeforeChangingTargetMax: 8
+  distanceToSeeCorner: 10
+  speedIncreaseView: 5
   isStun: 0
   stunMat: {fileID: 2100000, guid: 5a26de236ce89e94b963be8fa2b7ade6, type: 2}
   originalMat: {fileID: 2100000, guid: f6298605825d7154f8923c76872aa46e, type: 2}
+  seeACorner: {fileID: 2100000, guid: c852af001dae0064e9acaa832f1dadb7, type: 2}
