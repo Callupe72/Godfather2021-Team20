@@ -24,19 +24,31 @@ public class PlayerWeapon : MonoBehaviour
     [Header("PostProcess")]
     public Volume postProcess;
     ChromaticAberration chromaAb;
+    Bloom bloom;
+    Vignette vignette;
 
 
     void Start()
     {
         startingField = cam.fieldOfView;
 
-        ChromaticAberration chromAb;
+        ChromaticAberration _chromAb;
+        Bloom _bloom;
+        Vignette _vignette;
 
-        if ( postProcess.profile.TryGet<ChromaticAberration>(out chromAb))
+        if ( postProcess.profile.TryGet<ChromaticAberration>(out _chromAb))
         {
-            chromaAb = chromAb;
+            chromaAb = _chromAb;
         }
-        
+        if (postProcess.profile.TryGet<Bloom>(out _bloom))
+        {
+            bloom = _bloom;
+        }
+        if (postProcess.profile.TryGet<Vignette>(out _vignette))
+        {
+            vignette = _vignette;
+        }
+
     }
     void Update()
     {
@@ -46,13 +58,17 @@ public class PlayerWeapon : MonoBehaviour
             {
                 currentLoad += Time.deltaTime;
                 cam.fieldOfView = startingField + (camMultiplier * currentLoad);
-                chromaAb.intensity.value = currentLoad / 10;
+                chromaAb.intensity.value = currentLoad / 3;
+                bloom.intensity.value = currentLoad / 2;
+                vignette.intensity.value = currentLoad / 10 * 3;
             }
         }
         else if (Input.GetMouseButtonUp(0))
         {
             cam.fieldOfView = startingField;
             chromaAb.intensity.value = 0;
+            bloom.intensity.value = 0;
+            vignette.intensity.value = 0;
             Fire();
         }
     }
