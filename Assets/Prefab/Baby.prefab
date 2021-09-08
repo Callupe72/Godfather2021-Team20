@@ -112,7 +112,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 80
+  m_Constraints: 112
   m_CollisionDetection: 2
 --- !u!114 &831420247317373602
 MonoBehaviour:
@@ -141,9 +141,14 @@ MonoBehaviour:
   secondsBeforeChangingTargetMin: 5
   secondsBeforeChangingTargetMax: 10
   distanceToSeeCorner: 10
-  speedIncreaseView: 1
+  speedIncreaseView: 20
   isStun: 0
   stunMat: {fileID: 2100000, guid: 5a26de236ce89e94b963be8fa2b7ade6, type: 2}
   originalMat: {fileID: 2100000, guid: f6298605825d7154f8923c76872aa46e, type: 2}
   seeACorner: {fileID: 2100000, guid: c852af001dae0064e9acaa832f1dadb7, type: 2}
   goingToCenter: 0
+  timeBeforeDying: 5
+  collisionResult: 0
+  doNotNeedToThink: 0
+  fightPercentage: 100
+  carryPercentage: 100

@@ -15,10 +15,7 @@ public class Timer : MonoBehaviour
         if (!timerPlay)
             return;
 
-
         seconds -= Time.deltaTime;
-        Debug.Log(seconds);
-
         if (seconds > 9)
             timerText.text = currentText + " 0" + (int)minutes + " : " + (int)seconds;
         else
