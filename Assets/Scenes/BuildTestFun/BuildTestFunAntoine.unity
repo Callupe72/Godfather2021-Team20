@@ -2783,7 +2783,7 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: cd05dc3c9549fd04fb47cf7fbde9fea8, type: 3}
     minDist: 0.1
     maxDist: 10
-    volume: 1
+    volume: 0.423
     canLoop: 0
   audioVolumeSlider: {fileID: 430470289}
   audioValueText: {fileID: 619041997}

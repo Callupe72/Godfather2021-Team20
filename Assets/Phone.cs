@@ -21,7 +21,6 @@ public class Phone : MonoBehaviour
     {
         float randomTime = Random.Range(timeMinBeforeRing, timeMaxBeforeRing);
         yield return new WaitForSeconds(randomTime);
-        Debug.Log("Ring");
         StartRinging();
     }
 
