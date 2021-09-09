@@ -4841,6 +4841,7 @@ MonoBehaviour:
   - {fileID: 1562263341}
   - {fileID: 541981497}
   - {fileID: 1245485003}
+  babyNumber: 5
 --- !u!4 &1516811600
 Transform:
   m_ObjectHideFlags: 0
@@ -7016,6 +7017,7 @@ GameObject:
   - component: {fileID: 1924376011}
   - component: {fileID: 1924376010}
   - component: {fileID: 1924376009}
+  - component: {fileID: 1924376014}
   m_Layer: 0
   m_Name: Phone
   m_TagString: Phone
@@ -7041,6 +7043,7 @@ MonoBehaviour:
   actualModifierSpeed: 1
   multiplierFightFactor: 1.25
   actualModifierFight: 1
+  animator: {fileID: 1924376014}
 --- !u!65 &1924376010
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7117,6 +7120,25 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &1924376014
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1924376008}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: d2b5313bd2a6ef641b59e2f305eddc97, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1952432628
 GameObject:
   m_ObjectHideFlags: 0

@@ -11,6 +11,9 @@ public class Phone : MonoBehaviour
     [HideInInspector] public float actualModifierSpeed = 1f;
     public float multiplierFightFactor = 1.25f;
     [HideInInspector] public float actualModifierFight = 1f;
+
+    [SerializeField] private Animator animator;
+
     void Start()
     {
         actualModifierSpeed = 1;
@@ -25,13 +28,16 @@ public class Phone : MonoBehaviour
     }
 
     void StartRinging()
-    {
+    {        
         actualModifierSpeed = multiplierSpeedFactor;
         actualModifierFight = multiplierFightFactor;
+
+        animator.SetBool("isRingging", true);
     }
 
     public void Hit()
     {
+        animator.SetBool("isRingging", false);
         actualModifierSpeed = 1;
         actualModifierFight = 1;
         StartCoroutine(Ring());
