@@ -64,6 +64,10 @@ public class BabyMovement : MonoBehaviour
     float speedStealMultiplier = 1f;
     float fightStealMultiplier = 1f;
 
+    bool doNotGoOnGround;
+
+    bool imChecking;
+
     public enum CollisionResult
     {
         none,
@@ -85,6 +89,9 @@ public class BabyMovement : MonoBehaviour
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(transform.position, distanceFollowBall);
 
+        Gizmos.color = Color.red;
+        Gizmos.DrawSphere(transform.position + Vector3.down * 0.25f, 0.25f);
+
     }
 
     void Start()
@@ -100,6 +107,7 @@ public class BabyMovement : MonoBehaviour
     void Update()
     {
 
+        Steal();
         //Si le bebe change de dir et veut die
         //if (hasToChangeDir && wantToDie)
         //{
@@ -119,11 +127,21 @@ public class BabyMovement : MonoBehaviour
         //    coinPosition = new Vector3 (nearestCoin.transform.position.x, nearestCoin.transform.position.y, nearestCoin.transform.position.z);
         //    transform.LookAt(coin[wichCoin].transform);
         //}
+        if (!imChecking)
+        {
+            if (rb.velocity.magnitude <= 0)
+            {
+                imChecking = true;
+                collisionResult = CollisionResult.none;
+                StartCoroutine(UnLockBaby());
+            }
+
+        }
 
 
         if (!isFalling && !isLanding && !isFighting)
         {
-            if (rb.velocity.magnitude > 9)
+            if (rb.velocity.magnitude > 11)
             {
                 ChangeAnimation("IsRunning");
             }
@@ -148,8 +166,11 @@ public class BabyMovement : MonoBehaviour
             switch (collisionResult)
             {
                 case CollisionResult.none:
-                    Movement();
-                    GoToGround();
+                    if (!doNotGoOnGround)
+                    {
+                        Movement();
+                        GoToGround();
+                    }
                     if (nearestCorner == null && collisionResult == CollisionResult.none)
                         distanceToSeeCorner += speedIncreaseView / 10 * Time.deltaTime;
                     break;
@@ -180,7 +201,24 @@ public class BabyMovement : MonoBehaviour
                 RandomRotationOnAWall();
         }
 
-        Steal();
+    }
+
+    bool TouchGround()
+    {
+        foreach (Collider item in Physics.OverlapSphere(transform.position + (Vector3.down * 0.25f), 1.5f))
+        {
+            if (item.gameObject.CompareTag("Ground"))
+                return true;
+        }
+
+        return false;
+    }
+
+    IEnumerator UnLockBaby()
+    {
+        yield return new WaitForSeconds(5f);
+        WillIChangeTarget();
+        imChecking = false;
     }
 
     void Steal()
@@ -204,9 +242,21 @@ public class BabyMovement : MonoBehaviour
                     speedStealMultiplier = FindObjectOfType<ObjectToSteal>().speedMultuplier;
                     fightStealMultiplier = FindObjectOfType<ObjectToSteal>().fightMultiplier;
                     collisionResult = CollisionResult.none;
+                    doNotGoOnGround = true;
+                    rb.velocity = new Vector3(rb.velocity.x + 10, rb.velocity.y + 10, rb.velocity.z + 10);
+                    transform.LookAt(transform.forward);
+                    StartCoroutine(BackToGround());
                 }
             }
         }
+    }
+
+    IEnumerator BackToGround()
+    {
+        isFalling = true;
+        ChangeAnimation("IsFalling");
+        yield return new WaitForSeconds(0.75f);
+        doNotGoOnGround = false;
     }
     void DetectBall()
     {
@@ -232,14 +282,17 @@ public class BabyMovement : MonoBehaviour
 
     void Die()
     {
-        Destroy(gameObject, 1f);
+        Destroy(gameObject, 0.5f);
         ChangeAnimation("IsDying");
-        AudioManager.instance.StopSound("BabyDisparition");
         AudioManager.instance.Play3DSound("BabyDisparition", transform.position);
     }
 
     public void Hit(float stunTime)
     {
+
+
+        ChangeAnimation("IsStun");
+
         if (objToSteal != null)
         {
             objToSteal.GetComponent<Rigidbody>().useGravity = true;
@@ -276,8 +329,10 @@ public class BabyMovement : MonoBehaviour
         isStun = false;
         if (nearestCorner == null)
             WillIChangeTarget();
-        else
-            GoToCenter();
+        //else
+        //    GoToCenter();
+        ChangeAnimation("IsWalking");
+
     }
 
     void GoToCenter()
@@ -365,6 +420,8 @@ public class BabyMovement : MonoBehaviour
         anim.SetBool("IsFighting", false);
         anim.SetBool("IsLanding", false);
         anim.SetBool("IsDying", false);
+        anim.SetBool("IsStun", false);
+        anim.SetBool("IsFalling", false);
 
         anim.SetBool(animationName, true);
     }
@@ -404,7 +461,7 @@ public class BabyMovement : MonoBehaviour
 
     IEnumerator WaitLandingEnd()
     {
-        yield return new WaitForSeconds(0.55f);
+        yield return new WaitForSeconds(1f);
         ChangeAnimation("IsWalking");
         isLanding = false;
 
@@ -412,17 +469,10 @@ public class BabyMovement : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Ground"))
-        {
-            ChangeAnimation("IsLanding");
-            isLanding = true;
-            isFalling = false;
-            StartCoroutine(WaitLandingEnd());
-        }
 
         if (collision.gameObject.CompareTag("Baby"))
         {
-            StopAllCoroutines();
+            //StopAllCoroutines();
             if (collisionResult != CollisionResult.none)
                 return;
 

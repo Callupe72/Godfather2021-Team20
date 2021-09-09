@@ -16,7 +16,6 @@ public class Spawn : MonoBehaviour
     {
         wichspawnPoint = Random.Range(0, spawnPoint.Length);
         GameObject babyInstance = Instantiate(baby, spawnPoint[wichspawnPoint].transform.position, spawnPoint[wichspawnPoint].transform.rotation);
-        AudioManager.instance.StopSound("BabyPop");
         AudioManager.instance.Play3DSound("BabyPop", transform.position);
 
         BabyMovement babyMove = babyInstance.GetComponent<BabyMovement>();

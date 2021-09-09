@@ -72,7 +72,8 @@ public class AudioManager : MonoBehaviour
     {
         Sound s = Array.Find(sounds, sound => sound.name == name);
 
-        GameObject obj3D = Instantiate(new GameObject(), positionToPlay, Quaternion.identity);
+        GameObject obj3D = new GameObject();
+        obj3D.transform.position = positionToPlay;
         obj3D.AddComponent<AudioSource>();
         AudioSource source3D = obj3D.GetComponent<AudioSource>();
 
