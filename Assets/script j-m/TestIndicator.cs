@@ -4,17 +4,17 @@ using UnityEngine;
 
 public class TestIndicator : MonoBehaviour
 {
-    [SerializeField] float destroyTimer = 20.0f;
+    [SerializeField] public float destroyTimer = 20.0f;
     void OnEnable()
     {
-        Invoke("Register", Random.Range(0, 8));  
+     //   Invoke("Register", Random.Range(0, 8));  
     }
-    void Register()
+    public void Register()
     {
+        Destroy(this, destroyTimer);
         if (!DI_Systeme.CheckIfObjectInSight(this.transform))
         {
             DI_Systeme.CreateIndicator(this.transform);
         }
-        Destroy(this, destroyTimer);
     }
 }

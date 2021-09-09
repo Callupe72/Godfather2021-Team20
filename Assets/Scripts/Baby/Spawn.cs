@@ -21,6 +21,12 @@ public class Spawn : MonoBehaviour
         }
     }
 
+    void Update()
+    {
+        if (FindObjectsOfType<BabyMovement>().Length < babyNumber)
+            SpawnABaby();
+    }
+
     public void SpawnABaby()
     {
         wichspawnPoint = Random.Range(0, spawnPoint.Length);
