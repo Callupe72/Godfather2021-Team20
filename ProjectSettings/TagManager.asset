@@ -13,6 +13,7 @@ TagManager:
   - Football
   - Ground
   - Bullet
+  - Piscine
   layers:
   - Default
   - TransparentFX
