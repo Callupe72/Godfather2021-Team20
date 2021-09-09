@@ -12,6 +12,7 @@ TagManager:
   - Desk
   - Football
   - Ground
+  - Bullet
   layers:
   - Default
   - TransparentFX
