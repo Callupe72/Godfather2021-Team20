@@ -27,6 +27,14 @@ public class PlayerWeapon : MonoBehaviour
     Bloom bloom;
     Vignette vignette;
 
+    public float distanceSound = 10f;
+
+
+    void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, distanceSound);
+    }
 
     void Start()
     {

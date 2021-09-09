@@ -188,7 +188,7 @@ public class BabyMovement : MonoBehaviour
     {
         if (collisionResult == CollisionResult.fight)
         {
-            if (!doNotNeedToThink)
+            //if (!doNotNeedToThink)
             {
                 for (int i = 0; i < babiesFight.Count; i++)
                 {
@@ -322,7 +322,7 @@ public class BabyMovement : MonoBehaviour
         Debug.DrawRay(transform.position, Vector3.down * 100);
         if (Physics.Raycast(transform.position, Vector3.down, out hit, 100))
         {
-            transform.position = new Vector3(transform.position.x, hit.point.y + 0.25f, transform.position.z);
+            transform.position = new Vector3(transform.position.x, hit.point.y + 0.1f, transform.position.z);
         }
     }
 
