@@ -24,6 +24,7 @@ public class Corners : MonoBehaviour
                 if (!item.GetComponent<BabyMovement>().willIDie)
                 {
                     item.GetComponent<BabyMovement>().willIDie = true;
+                    AudioManager.instance.Play3DSound("BabyElect", transform.position);
                     if (!item.GetComponent<TestIndicator>())
                         item.gameObject.AddComponent<TestIndicator>();
                     item.GetComponent<TestIndicator>().destroyTimer = timeBeforeKill / 5;

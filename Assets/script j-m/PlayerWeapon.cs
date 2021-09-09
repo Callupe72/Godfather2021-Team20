@@ -64,6 +64,7 @@ public class PlayerWeapon : MonoBehaviour
             vignette = _vignette;
         }
         ChangeBall();
+
     }
 
     void ChangeBall()
@@ -107,7 +108,11 @@ public class PlayerWeapon : MonoBehaviour
             //bloom.intensity.value = 0;
             vignette.intensity.value = 0;
             Fire();
+
+            int i = Random.Range(0, 1);
+            AudioManager.instance.Play3DSound("Throw" + i, transform.position);
         }
+
 
     }
 
@@ -153,13 +158,14 @@ public class PlayerWeapon : MonoBehaviour
         bullet.transform.rotation = Quaternion.Euler(rotation.x, transform.eulerAngles.y, rotation.z);
 
         bullet.GetComponent<Rigidbody>().AddForce(bulletSpawn.forward * bulletSpeed * currentLoad, ForceMode.Impulse);
-        currentLoad = 0;
+        currentLoad = 0;       
 
         Destroy(bullet, lifeTime);
 
         bullet = null;
 
         StartCoroutine(Wait());
+
     }
 
     IEnumerator Wait()
