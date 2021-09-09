@@ -416,6 +416,7 @@ GameObject:
   - component: {fileID: 2477791742555781141}
   - component: {fileID: 919132147506370335}
   - component: {fileID: 1579569496969381968}
+  - component: {fileID: 8685631836868698773}
   m_Layer: 0
   m_Name: "b\xE9b\xE9"
   m_TagString: Baby
@@ -548,6 +549,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.71304846, y: 0.99222946, z: 1.628459}
   m_Center: {x: 0.009339571, y: 0.25512433, z: -0.04838419}
+--- !u!114 &8685631836868698773
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3360683299407148550}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b635ee087b6bda4bbb1052b0d0cb396, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  destroyTimer: 20
 --- !u!1 &3528450674683444410
 GameObject:
   m_ObjectHideFlags: 0

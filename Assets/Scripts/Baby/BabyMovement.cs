@@ -94,7 +94,7 @@ public class BabyMovement : MonoBehaviour
 
     }
 
-    void Start()
+    void OnEnable()
     {
         anim = GetComponent<Animator>();
         meshRenderer = GetComponent<MeshRenderer>();
@@ -469,7 +469,6 @@ public class BabyMovement : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-
         if (collision.gameObject.CompareTag("Baby"))
         {
             //StopAllCoroutines();
@@ -488,6 +487,9 @@ public class BabyMovement : MonoBehaviour
                 if (transform.position.x + transform.position.z > collision.transform.position.x + collision.transform.position.z)
                 {
                     int random = Random.Range(0, 100);
+
+                    if (phone == null)
+                        phone = FindObjectOfType<Phone>();
 
                     if (random < fightPercentage * phone.actualModifierFight)
                     {
