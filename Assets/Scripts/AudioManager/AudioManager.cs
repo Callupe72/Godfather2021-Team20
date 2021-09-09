@@ -26,7 +26,6 @@ public class AudioManager : MonoBehaviour
     }
     void Start()
     {
-        AudioManager.instance.Play3DSound("SoundTest", transform.position);
         LoadAudioValue();
     }
 

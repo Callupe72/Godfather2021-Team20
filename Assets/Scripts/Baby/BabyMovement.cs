@@ -42,8 +42,10 @@ public class BabyMovement : MonoBehaviour
     Animator anim;
 
     [Header("Desk")]
-    public PathCreator pathCreatorOnDesk;
-    public PathCreator pathCreatorGoOnDesk;
+    [HideInInspector] public PathCreator pathCreatorOnDesk;
+    [HideInInspector] public PathCreator pathCreatorGoOnDesk;
+    public float minTimeBeforeSteal = 5f;
+    public float maxTimeBeforeSteal = 10f;
     public float speedOnDesk = 5f;
     float distanceTravelled;
 
@@ -157,6 +159,26 @@ public class BabyMovement : MonoBehaviour
 
     }
 
+    void Steal(GameObject objToSteal)
+    {
+
+    }
+
+    IEnumerator WillISteal()
+    {
+        float timeBeforeSteal = Random.Range(minTimeBeforeSteal, maxTimeBeforeSteal);
+        yield return new WaitForSeconds(timeBeforeSteal);
+        if (collisionResult == CollisionResult.onDesk)
+        {
+            for (int i = 0; i < FindObjectsOfType<ObjectToSteal>().Length; i++)
+            {
+                if (FindObjectsOfType<ObjectToSteal>()[i].canBeSteal)
+                {
+                    Steal(FindObjectsOfType<ObjectToSteal>()[i].gameObject);
+                }
+            }
+        }
+    }
     void DetectBall()
     {
         foreach (Collider item in Physics.OverlapSphere(transform.position, distanceFollowBall))
@@ -200,7 +222,7 @@ public class BabyMovement : MonoBehaviour
                 collisionResult = CollisionResult.none;
             }
         }
-        if (collisionResult == CollisionResult.onDesk)
+        if (collisionResult != CollisionResult.none)
             collisionResult = CollisionResult.none;
         babiesFight.Clear();
         previousCorner = nearestCorner;
@@ -420,9 +442,12 @@ public class BabyMovement : MonoBehaviour
 
         if (other.gameObject.CompareTag("Desk"))
         {
+            StartCoroutine(WillISteal());
             collisionResult = CollisionResult.onDesk;
             pathCreatorOnDesk = GameObject.Find("OnDeskPath").GetComponent<PathCreator>();
             pathCreatorGoOnDesk = GameObject.Find("GoOnDeskPath").GetComponent<PathCreator>();
         }
     }
+
+
 }
