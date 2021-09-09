@@ -190,6 +190,11 @@ public class BabyMovement : MonoBehaviour
             }
         }
 
+        if (goingToCenter)
+        {
+            GoingToCenter();
+        }
+
         if (transform.rotation.eulerAngles.x != 0)
         {
             transform.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0);
@@ -455,6 +460,11 @@ public class BabyMovement : MonoBehaviour
         {
             transform.position = Vector3.MoveTowards(transform.position, positionToGo, speedSeingCorner / 10 * Time.deltaTime * phone.actualModifierSpeed);
         }
+    }
+
+    void GoingToCenter()
+    {
+        transform.position = Vector3.MoveTowards(transform.position, positionToGo, speedSeingCorner / 10 * Time.deltaTime * phone.actualModifierSpeed);
     }
 
     void GoToGround()
