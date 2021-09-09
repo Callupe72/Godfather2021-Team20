@@ -21,6 +21,8 @@ public class Corners : MonoBehaviour
             {
                 Destroy(item);
                 item.GetComponent<Rigidbody>().isKinematic = true;
+                AudioManager.instance.StopSound("BabyDie");
+                AudioManager.instance.Play3DSound("BabyDie", transform.position);
                 Destroy(item.gameObject, timeBeforeKill);
                 FindObjectOfType<Spawn>().SpawnABaby();
                 //Score

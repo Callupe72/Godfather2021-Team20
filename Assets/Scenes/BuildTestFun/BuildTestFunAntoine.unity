@@ -2785,6 +2785,12 @@ MonoBehaviour:
     maxDist: 10
     volume: 0.423
     canLoop: 0
+  - name: BabyDie
+    clip: {fileID: 8300000, guid: 7b974772395e4684ca47024bd500c0c0, type: 3}
+    minDist: 0.1
+    maxDist: 10
+    volume: 0.423
+    canLoop: 0
   audioVolumeSlider: {fileID: 430470289}
   audioValueText: {fileID: 619041997}
 --- !u!4 &1075463088
