@@ -80,6 +80,7 @@ public class BabyMovement : MonoBehaviour
 
     [Tooltip("Chance de 0 à la valeur")] [Range(0, 100)] public int fightPercentage = 20;
     [Tooltip("Chance de la valeur précédente à celle-ci")] [Range(0, 100)] public int carryPercentage = 50;
+    private bool isDying;
 
     void OnDrawGizmos()
     {
@@ -107,6 +108,11 @@ public class BabyMovement : MonoBehaviour
 
     void Update()
     {
+        if (isDying)
+        {
+            return;
+        }
+
 
         Steal();
         //Si le bebe change de dir et veut die
@@ -139,6 +145,12 @@ public class BabyMovement : MonoBehaviour
 
         }
 
+        for (int i = 0; i < babiesFight.Count; i++)
+        {
+            if (babiesFight[i] == null)
+                babiesFight.RemoveAt(i);
+        }
+
 
         if (!isFalling && !isLanding && !isFighting)
         {
@@ -150,6 +162,10 @@ public class BabyMovement : MonoBehaviour
             {
                 ChangeAnimation("IsWalking");
             }
+        }
+        if (rb.velocity.magnitude > 11)
+        {
+            ChangeAnimation("IsRunning");
         }
 
 
@@ -176,8 +192,13 @@ public class BabyMovement : MonoBehaviour
                         distanceToSeeCorner += speedIncreaseView / 10 * Time.deltaTime;
                     break;
                 case CollisionResult.fight:
-                    if (babiesFight.Count == 0)
-                        collisionResult = CollisionResult.none;
+                    {
+                        if (babiesFight.Count == 0)
+                            collisionResult = CollisionResult.none;
+                        else
+                            transform.LookAt(babiesFight[0].transform.position);
+
+                    }
                     break;
                 case CollisionResult.carry:
                     break;
@@ -286,9 +307,12 @@ public class BabyMovement : MonoBehaviour
         transform.LookAt(footballTransform.position);
     }
 
-    void Die()
+    public void Die()
     {
-        Destroy(gameObject, 0.5f);
+        isDying = true;
+        StartCoroutine(FindObjectOfType<CameraShakes>().Shake(.15f, .4f));
+        Destroy(gameObject, 1f);
+        FindObjectOfType<Spawn>().SpawnABaby();
         ChangeAnimation("IsDying");
         AudioManager.instance.Play3DSound("BabyDisparition", transform.position);
     }

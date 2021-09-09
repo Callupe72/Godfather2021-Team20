@@ -47,8 +47,7 @@ public class Corners : MonoBehaviour
                     GameObject eclair = Instantiate(eclairAll, transform.position, Quaternion.identity);
                     eclair.GetComponent<ParticleSystem>().Play();
                     Destroy(eclair, .5f);
-                    StartCoroutine(CameraShakes.Shake(.15f, .4f));
-                    Destroy(baby);
+                    item.GetComponent<BabyMovement>().Die();
                 }
             }
         }

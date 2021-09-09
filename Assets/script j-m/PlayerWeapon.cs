@@ -26,7 +26,7 @@ public class PlayerWeapon : MonoBehaviour
     [Header("PostProcess")]
     public Volume postProcess;
     ChromaticAberration chromaAb;
-    Bloom bloom;
+    //Bloom bloom;
     Vignette vignette;
 
     public float distanceSound = 10f;
@@ -48,17 +48,17 @@ public class PlayerWeapon : MonoBehaviour
         startingField = cam.fieldOfView;
 
         ChromaticAberration _chromAb;
-        Bloom _bloom;
+        //Bloom _bloom;
         Vignette _vignette;
 
         if (postProcess.profile.TryGet<ChromaticAberration>(out _chromAb))
         {
             chromaAb = _chromAb;
         }
-        if (postProcess.profile.TryGet<Bloom>(out _bloom))
-        {
-            bloom = _bloom;
-        }
+        //if (postProcess.profile.TryGet<Bloom>(out _bloom))
+        //{
+        //    bloom = _bloom;
+        //}
         if (postProcess.profile.TryGet<Vignette>(out _vignette))
         {
             vignette = _vignette;
@@ -96,7 +96,7 @@ public class PlayerWeapon : MonoBehaviour
                 currentLoad += Time.deltaTime;
                 cam.fieldOfView = startingField + (camMultiplier * currentLoad);
                 chromaAb.intensity.value = currentLoad / 3;
-                bloom.intensity.value = currentLoad / 2;
+               // bloom.intensity.value = currentLoad / 2;
                 vignette.intensity.value = currentLoad / 10 * 3;
             }
         }
@@ -104,7 +104,7 @@ public class PlayerWeapon : MonoBehaviour
         {
             cam.fieldOfView = startingField;
             chromaAb.intensity.value = 0;
-            bloom.intensity.value = 0;
+            //bloom.intensity.value = 0;
             vignette.intensity.value = 0;
             Fire();
         }
