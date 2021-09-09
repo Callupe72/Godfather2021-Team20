@@ -28,6 +28,13 @@ public class BulletBehaviour : MonoBehaviour
         {
             other.gameObject.GetComponent<Phone>().Hit();
         }
+        /*else if (other.gameObject.CompareTag("Piscine"))
+        {
+            if (other.gameObject.GetComponent<Joint>() != null)
+            {
+                other.gameObject.GetComponent<Joint>().breakForce = 0;
+            }
+        }*/
         switch (ballType)
         {
             case BallType.destroyable:
