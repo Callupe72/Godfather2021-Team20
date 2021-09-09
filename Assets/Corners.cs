@@ -7,6 +7,7 @@ public class Corners : MonoBehaviour
     public float cornerRadius = 2f;
     public float timeBeforeKill = 1f;
     public List<BabyMovement> childs = new List<BabyMovement>();
+    [SerializeField] GameObject eclairAll;
 
     void OnDrawGizmos()
     {
@@ -21,30 +22,35 @@ public class Corners : MonoBehaviour
             if (item.gameObject.CompareTag("Baby"))
             {
                 childs.Add(item.GetComponent<BabyMovement>());
-                StartCoroutine(AreTheyStillHere());
+                StartCoroutine(AreTheyStillHere(item.gameObject));
                 //Score
             }
         }
     }
 
-    IEnumerator AreTheyStillHere()
+    IEnumerator AreTheyStillHere(GameObject baby)
     {
         yield return new WaitForSeconds(timeBeforeKill);
-        foreach (Collider item in Physics.OverlapSphere(transform.position, cornerRadius))
-        {
-            for (int i = 0; i < childs.Count; i++)
-            {
-                if(item == childs[i])
-                {
-                    Destroy(item.gameObject);
-                    AudioManager.instance.Play3DSound("Babyelect", transform.position);
-                    AudioManager.instance.Play3DSound("BabyDisparition", transform.position);
-                    FindObjectOfType<Spawn>().SpawnABaby();
-                    childs.Clear();
+        GameObject eclair = Instantiate(eclairAll, transform.position, Quaternion.identity);
+        eclair.GetComponent<ParticleSystem>().Play();
+        Destroy(baby);
+        //foreach (Collider item in Physics.OverlapSphere(transform.position, cornerRadius))
+        //{
+        //    for (int i = 0; i < childs.Count; i++)
+        //    {
+        //        if(item == childs[i])
+        //        {
+        //            Destroy(item.gameObject);
+        //            GameObject eclair = Instantiate(eclairAll, transform.position, Quaternion.identity);
+        //            eclair.GetComponent<ParticleSystem>().Play();
+        //            AudioManager.instance.Play3DSound("Babyelect", transform.position);
+        //            AudioManager.instance.Play3DSound("BabyDisparition", transform.position);
+        //            FindObjectOfType<Spawn>().SpawnABaby();
+        //            childs.Clear();
 
-                }
-            }
-        }
+        //        }
+        //    }
+        //}
 
     }
 }

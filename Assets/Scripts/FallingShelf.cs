@@ -12,13 +12,20 @@ public class FallingShelf : MonoBehaviour
     [SerializeField] float minTime;
     float triggerTime;
 
-
-    // Start is called before the first frame update
     void Start()
     {
         triggerTime = Random.Range(minTime, maxTime);
         Debug.Log(triggerTime);
         StartCoroutine(FallShelf());
+    }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.CompareTag("Bullet"))
+        {
+            StopAllCoroutines();
+            rb.isKinematic = false;
+        }
     }
 
     IEnumerator FallShelf()
