@@ -204,6 +204,8 @@ public class BabyMovement : MonoBehaviour
     void Die()
     {
         Destroy(gameObject);
+        AudioManager.instance.StopSound("BabyDisparition");
+        AudioManager.instance.Play3DSound("BabyDisparition", transform.position);
     }
 
     public void Hit(float stunTime)
