@@ -495,7 +495,7 @@ MonoBehaviour:
   - {fileID: 0}
   cornersAvailable: []
   speed: 10
-  speedSeingCorner: 2
+  speedSeingCorner: 30
   seeWall: {fileID: 7371339088732136738}
   wantToDie: 0
   nearestCorner: {fileID: 0}
@@ -519,7 +519,7 @@ MonoBehaviour:
   distanceFollowBall: 5
   speedFollowBall: 3
   positionInHand: {fileID: 5346494659484570454}
-  fightPercentage: 100
+  fightPercentage: 20
   carryPercentage: 20
 --- !u!136 &919132147506370335
 CapsuleCollider:
