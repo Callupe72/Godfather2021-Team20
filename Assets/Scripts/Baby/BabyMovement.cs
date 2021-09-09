@@ -53,6 +53,17 @@ public class BabyMovement : MonoBehaviour
     public float distanceFollowBall = 5f;
     public float speedFollowBall = 3f;
     Transform footballTransform;
+
+    bool isLanding;
+    bool isFighting;
+    bool isFalling;
+
+    [Header("Object to steal")]
+    public Transform positionInHand;
+    Transform objToSteal;
+    float speedStealMultiplier = 1f;
+    float fightStealMultiplier = 1f;
+
     public enum CollisionResult
     {
         none,
@@ -109,7 +120,19 @@ public class BabyMovement : MonoBehaviour
         //    transform.LookAt(coin[wichCoin].transform);
         //}
 
-        //anim.SetFloat("Speed", rb.velocity.magnitude);
+
+        if (!isFalling && !isLanding && !isFighting)
+        {
+            if (rb.velocity.magnitude > 9)
+            {
+                ChangeAnimation("IsRunning");
+            }
+            else
+            {
+                ChangeAnimation("IsWalking");
+            }
+        }
+
 
         for (int i = 0; i < babiesFight.Count; i++)
         {
@@ -157,11 +180,13 @@ public class BabyMovement : MonoBehaviour
                 RandomRotationOnAWall();
         }
 
+        Steal();
     }
 
-    void Steal(GameObject objToSteal)
+    void Steal()
     {
-
+        if (objToSteal != null)
+            objToSteal.position = positionInHand.transform.position;
     }
 
     IEnumerator WillISteal()
@@ -170,11 +195,15 @@ public class BabyMovement : MonoBehaviour
         yield return new WaitForSeconds(timeBeforeSteal);
         if (collisionResult == CollisionResult.onDesk)
         {
-            for (int i = 0; i < FindObjectsOfType<ObjectToSteal>().Length; i++)
+            if (FindObjectOfType<ObjectToSteal>())
             {
-                if (FindObjectsOfType<ObjectToSteal>()[i].canBeSteal)
+                if (FindObjectOfType<ObjectToSteal>().canBeSteal)
                 {
-                    Steal(FindObjectsOfType<ObjectToSteal>()[i].gameObject);
+                    objToSteal = FindObjectOfType<ObjectToSteal>().transform;
+                    objToSteal.GetComponent<Rigidbody>().useGravity = false;
+                    speedStealMultiplier = FindObjectOfType<ObjectToSteal>().speedMultuplier;
+                    fightStealMultiplier = FindObjectOfType<ObjectToSteal>().fightMultiplier;
+                    collisionResult = CollisionResult.none;
                 }
             }
         }
@@ -203,16 +232,24 @@ public class BabyMovement : MonoBehaviour
 
     void Die()
     {
-        Destroy(gameObject);
+        Destroy(gameObject, 1f);
+        ChangeAnimation("IsDying");
         AudioManager.instance.StopSound("BabyDisparition");
         AudioManager.instance.Play3DSound("BabyDisparition", transform.position);
     }
 
     public void Hit(float stunTime)
     {
+        if (objToSteal != null)
+        {
+            objToSteal.GetComponent<Rigidbody>().useGravity = true;
+            objToSteal = null;
+            fightStealMultiplier = 1;
+            speedStealMultiplier = 1;
+        }
         if (collisionResult == CollisionResult.fight)
         {
-            //if (!doNotNeedToThink)
+            if (!doNotNeedToThink)
             {
                 for (int i = 0; i < babiesFight.Count; i++)
                 {
@@ -257,6 +294,8 @@ public class BabyMovement : MonoBehaviour
         Vector3 transformEular = transform.rotation.eulerAngles;
         transform.rotation = Quaternion.Euler(new Vector3(transformEular.x, yRotation, transformEular.z));
         positionToGo = transform.TransformDirection(Vector3.forward);
+
+
     }
     void RandomRotationOnAWall()
     {
@@ -319,6 +358,17 @@ public class BabyMovement : MonoBehaviour
         }
     }
 
+    public void ChangeAnimation(string animationName)
+    {
+        anim.SetBool("IsRunning", false);
+        anim.SetBool("IsWalking", false);
+        anim.SetBool("IsFighting", false);
+        anim.SetBool("IsLanding", false);
+        anim.SetBool("IsDying", false);
+
+        anim.SetBool(animationName, true);
+    }
+
     void Movement()
     {
         if (collisionResult != CollisionResult.none)
@@ -327,7 +377,9 @@ public class BabyMovement : MonoBehaviour
         if (!goingToCenter)
         {
             if (nearestCorner == null)
+            {
                 rb.velocity = positionToGo * speed * phone.actualModifierSpeed;
+            }
             else
             {
                 transform.position = Vector3.MoveTowards(transform.position, positionToGo, speedSeingCorner / 10 * Time.deltaTime * phone.actualModifierSpeed);
@@ -346,12 +398,28 @@ public class BabyMovement : MonoBehaviour
         Debug.DrawRay(transform.position, Vector3.down * 100);
         if (Physics.Raycast(transform.position, Vector3.down, out hit, 100))
         {
-            transform.position = new Vector3(transform.position.x, hit.point.y + 0.1f, transform.position.z);
+            transform.position = new Vector3(transform.position.x, hit.point.y + 0.25f, transform.position.z);
         }
+    }
+
+    IEnumerator WaitLandingEnd()
+    {
+        yield return new WaitForSeconds(0.55f);
+        ChangeAnimation("IsWalking");
+        isLanding = false;
+
     }
 
     void OnCollisionEnter(Collision collision)
     {
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            ChangeAnimation("IsLanding");
+            isLanding = true;
+            isFalling = false;
+            StartCoroutine(WaitLandingEnd());
+        }
+
         if (collision.gameObject.CompareTag("Baby"))
         {
             StopAllCoroutines();
@@ -388,7 +456,6 @@ public class BabyMovement : MonoBehaviour
             }
         }
     }
-
     void WalkOnDesk()
     {
         distanceTravelled += speed * Time.deltaTime;
@@ -410,6 +477,10 @@ public class BabyMovement : MonoBehaviour
 
     void Fight(GameObject other)
     {
+        ChangeAnimation("IsFighting");
+        isFighting = true;
+        other.GetComponent<BabyMovement>().ChangeAnimation("IsFighting");
+        other.GetComponent<BabyMovement>().isFighting = true;
         collisionResult = CollisionResult.fight;
         babiesFight.Add(other.GetComponent<BabyMovement>());
         other.GetComponent<BabyMovement>().babiesFight.Add(GetComponent<BabyMovement>());
@@ -448,6 +519,5 @@ public class BabyMovement : MonoBehaviour
             pathCreatorGoOnDesk = GameObject.Find("GoOnDeskPath").GetComponent<PathCreator>();
         }
     }
-
 
 }

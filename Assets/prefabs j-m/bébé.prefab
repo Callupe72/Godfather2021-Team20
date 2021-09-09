@@ -57,7 +57,8 @@ Transform:
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -1.3322676e-17, y: 0.1870402, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 5346494659484570454}
   m_Father: {fileID: 140100455097007871}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -512,10 +513,13 @@ MonoBehaviour:
   doNotNeedToThink: 0
   pathCreatorOnDesk: {fileID: 0}
   pathCreatorGoOnDesk: {fileID: 0}
+  minTimeBeforeSteal: 5
+  maxTimeBeforeSteal: 10
   speedOnDesk: 3
   distanceFollowBall: 5
   speedFollowBall: 3
-  fightPercentage: 20
+  positionInHand: {fileID: 5346494659484570454}
+  fightPercentage: 100
   carryPercentage: 20
 --- !u!136 &919132147506370335
 CapsuleCollider:
@@ -1019,6 +1023,36 @@ Transform:
   - {fileID: 8651018792467814213}
   - {fileID: 4638231152033673930}
   m_Father: {fileID: 3660666061242100563}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &8014266162668606707
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5346494659484570454}
+  m_Layer: 0
+  m_Name: PositionObjectStole
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5346494659484570454
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8014266162668606707}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4312001738038506655}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8595160255078481884
