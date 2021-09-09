@@ -181,6 +181,7 @@ MonoBehaviour:
   camMultiplier: 10
   postProcess: {fileID: 1782702141}
   distanceSound: 10
+  weapon: []
 --- !u!136 &8295816
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1929,7 +1930,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cornerRadius: 2
   timeBeforeKill: 1
-  childs: []
   eclairAll: {fileID: 3395308534136400260, guid: 31d8ebaef7a2b484d984444d506fb395, type: 3}
   CameraShakes: {fileID: 2014559918}
 --- !u!1 &541981497
@@ -2279,7 +2279,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cornerRadius: 2
   timeBeforeKill: 1
-  childs: []
   eclairAll: {fileID: 3395308534136400260, guid: 31d8ebaef7a2b484d984444d506fb395, type: 3}
   CameraShakes: {fileID: 2014559918}
 --- !u!136 &641759622
@@ -3006,6 +3005,30 @@ MonoBehaviour:
     canLoop: 0
   - name: BabyPop
     clip: {fileID: 8300000, guid: c048445ff78641e42b19daa1de2d11ea, type: 3}
+    minDist: 0.1
+    maxDist: 15
+    volume: 0.423
+    canLoop: 0
+  - name: BabyCry0
+    clip: {fileID: 8300000, guid: 0d0e7d5585c18814b912bcdb9e493aa1, type: 3}
+    minDist: 0.1
+    maxDist: 15
+    volume: 0.423
+    canLoop: 0
+  - name: BabyCry1
+    clip: {fileID: 8300000, guid: ec2968e3ef6908a498831830b84ace53, type: 3}
+    minDist: 0.1
+    maxDist: 15
+    volume: 0.423
+    canLoop: 0
+  - name: BabyCry2
+    clip: {fileID: 8300000, guid: b512791574eec214ba9b6f2c0050fb79, type: 3}
+    minDist: 0.1
+    maxDist: 15
+    volume: 0.423
+    canLoop: 0
+  - name: BabyCry3
+    clip: {fileID: 8300000, guid: 25080cbb553cee041a8b26bd41daf57d, type: 3}
     minDist: 0.1
     maxDist: 15
     volume: 0.423
@@ -4225,7 +4248,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cornerRadius: 2
   timeBeforeKill: 1
-  childs: []
   eclairAll: {fileID: 3395308534136400260, guid: 31d8ebaef7a2b484d984444d506fb395, type: 3}
   CameraShakes: {fileID: 2014559918}
 --- !u!136 &1316062617
@@ -5504,7 +5526,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cornerRadius: 2
   timeBeforeKill: 1
-  childs: []
   eclairAll: {fileID: 3395308534136400260, guid: 31d8ebaef7a2b484d984444d506fb395, type: 3}
   CameraShakes: {fileID: 2014559918}
 --- !u!136 &1562268847

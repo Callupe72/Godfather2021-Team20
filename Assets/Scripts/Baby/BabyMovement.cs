@@ -582,6 +582,9 @@ public class BabyMovement : MonoBehaviour
         transform.LookAt(other.transform.position);
         other.transform.LookAt(transform.position);
         StartCoroutine(FightDie(other));
+
+        int i = Random.Range(0,3);
+        AudioManager.instance.Play3DSound("BabyCry" + i , transform.position);
     }
 
     IEnumerator FightDie(GameObject other)
@@ -589,8 +592,10 @@ public class BabyMovement : MonoBehaviour
         yield return new WaitForSeconds(timeBeforeDying);
         FindObjectOfType<Spawn>().SpawnABaby();
         FindObjectOfType<Spawn>().SpawnABaby();
+        AudioManager.instance.Play3DSound("BabyDisparition", transform.position);
         Destroy(other);
         Destroy(gameObject);
+
 
     }
 
