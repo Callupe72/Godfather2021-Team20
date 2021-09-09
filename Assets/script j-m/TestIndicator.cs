@@ -11,7 +11,7 @@ public class TestIndicator : MonoBehaviour
     }
     public void Register()
     {
-        Destroy(this, destroyTimer);
+        Destroy(this, 0.2f);
         if (!DI_Systeme.CheckIfObjectInSight(this.transform))
         {
             DI_Systeme.CreateIndicator(this.transform);

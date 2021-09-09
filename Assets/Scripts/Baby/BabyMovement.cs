@@ -506,7 +506,6 @@ public class BabyMovement : MonoBehaviour
         yield return new WaitForSeconds(1f);
         ChangeAnimation("IsWalking");
         isLanding = false;
-
     }
 
     void OnCollisionEnter(Collision collision)
