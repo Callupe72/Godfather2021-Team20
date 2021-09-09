@@ -515,8 +515,8 @@ MonoBehaviour:
   speedOnDesk: 3
   distanceFollowBall: 5
   speedFollowBall: 3
-  fightPercentage: 100
-  carryPercentage: 100
+  fightPercentage: 20
+  carryPercentage: 20
 --- !u!136 &919132147506370335
 CapsuleCollider:
   m_ObjectHideFlags: 0
