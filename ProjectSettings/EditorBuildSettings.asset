@@ -9,7 +9,7 @@ EditorBuildSettings:
     path: Assets/Scenes/J-M Menu.unity
     guid: 2c51fb2ca551cdc448f02266750b0664
   - enabled: 1
-    path: Assets/Scenes/BuildTestFun.unity
+    path: Assets/Scenes/BuildTestFun/BuildTestFun.unity
     guid: b4518dbb553415e4db207aa14c60b9ac
   - enabled: 1
     path: Assets/Scenes/Credits.unity
