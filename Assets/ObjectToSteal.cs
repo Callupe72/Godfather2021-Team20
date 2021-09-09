@@ -3,7 +3,10 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class ObjectToSteal : MonoBehaviour
 {
-    [HideInInspector] public bool canBeSteal;
+    public bool canBeSteal;
+    public float speedMultuplier = 1.25f;
+    public float fightMultiplier = 1.25f;
+
     void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Desk"))
