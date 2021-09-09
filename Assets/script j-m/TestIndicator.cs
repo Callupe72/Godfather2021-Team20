@@ -5,7 +5,7 @@ using UnityEngine;
 public class TestIndicator : MonoBehaviour
 {
     [SerializeField] float destroyTimer = 20.0f;
-    void Start()
+    void OnEnable()
     {
         Invoke("Register", Random.Range(0, 8));  
     }
@@ -15,8 +15,6 @@ public class TestIndicator : MonoBehaviour
         {
             DI_Systeme.CreateIndicator(this.transform);
         }
-        Destroy(this.gameObject, destroyTimer);
+        Destroy(this, destroyTimer);
     }
-
-    
 }
