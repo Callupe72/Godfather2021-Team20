@@ -59,6 +59,8 @@ public class BabyMovement : MonoBehaviour
     bool isFighting;
     bool isFalling;
 
+    public GameObject deathParticles;
+
     [Header("Object to steal")]
     public Transform positionInHand;
     Transform objToSteal;
@@ -330,6 +332,14 @@ public class BabyMovement : MonoBehaviour
         Destroy(scoreTextGo, 1f);
         Destroy(gameObject, 1f);
         AudioManager.instance.Play3DSound("BabyDisparition", transform.position);
+    }
+
+    IEnumerator Particles()
+    {
+        yield return new WaitForSeconds(0.75f);
+        GameObject particlesGo = Instantiate(deathParticles, transform.position, Quaternion.identity);
+        particlesGo.transform.LookAt(FindObjectOfType<PlayerWeapon>().transform.position);
+        Destroy(particlesGo, 1f);
     }
 
     public void Hit(float stunTime)
