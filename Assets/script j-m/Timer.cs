@@ -38,10 +38,10 @@ public class Timer : MonoBehaviour
 
             victoryScreen.SetActive(true);
             textVictory.text = KeepScore.Score + " pts";
-            Time.timeScale = 0;
             GameManager.gameEnded = true;
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
+            Time.timeScale = 0;
             return;
         }
     }

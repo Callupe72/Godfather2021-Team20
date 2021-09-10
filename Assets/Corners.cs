@@ -45,6 +45,7 @@ public class Corners : MonoBehaviour
             {
                 if (item.GetComponent<BabyMovement>().willIDie)
                 {
+                    AudioManager.instance.Play3DSound("BabyElect", item.transform.position);
                     GameObject eclair = Instantiate(eclairAll, transform.position, Quaternion.identity);
                     eclair.GetComponent<ParticleSystem>().Play();
                     Destroy(eclair, .5f);
