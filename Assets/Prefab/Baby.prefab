@@ -371,7 +371,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8038434815787371709
 Transform:
   m_ObjectHideFlags: 0
@@ -461,9 +461,10 @@ MonoBehaviour:
   speedOnDesk: 5
   distanceFollowBall: 5
   speedFollowBall: 3
+  deathParticles: {fileID: 3346248689254707155, guid: 9edc828b5542ab2489a6c4872b73dff7, type: 3}
   positionInHand: {fileID: 0}
   willIDie: 0
-  scoreText: {fileID: 0}
+  scoreText: {fileID: 5982773415201759043, guid: 9073c5f352f7d304fbfae60f60c0e743, type: 3}
   fightPercentage: 100
   carryPercentage: 100
 --- !u!95 &-8904895270562447480

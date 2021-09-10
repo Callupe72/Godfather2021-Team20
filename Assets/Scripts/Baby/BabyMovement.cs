@@ -330,6 +330,7 @@ public class BabyMovement : MonoBehaviour
         scoreTextGo.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "-75";
         scoreTextGo.transform.LookAt(FindObjectOfType<PlayerWeapon>().transform.position);
         Destroy(scoreTextGo, 1f);
+        StartCoroutine(Particles());
         Destroy(gameObject, 1f);
         AudioManager.instance.Play3DSound("BabyDisparition", transform.position);
     }
@@ -344,6 +345,9 @@ public class BabyMovement : MonoBehaviour
 
     public void Hit(float stunTime)
     {
+
+        if (collisionResult == CollisionResult.onDesk)
+            collisionResult = CollisionResult.none;
         if (GetComponent<TestIndicator>())
             Destroy(GetComponent<TestIndicator>());
 
