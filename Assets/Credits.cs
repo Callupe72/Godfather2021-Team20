@@ -10,5 +10,9 @@ public class Credits : MonoBehaviour
             SceneManager.LoadScene("J-M Menu");
         }
     }
+    public void backFromCredits()
+    {
+        SceneManager.LoadScene("J-M Menu");
+    }
 }
 
