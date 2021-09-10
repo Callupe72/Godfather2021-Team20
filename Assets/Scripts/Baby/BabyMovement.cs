@@ -316,14 +316,16 @@ public class BabyMovement : MonoBehaviour
         StartCoroutine(FindObjectOfType<CameraShakes>().Shake(.15f, .4f));
         FindObjectOfType<Spawn>().SpawnABaby();
         ChangeAnimation("IsDying");
-        AudioManager.instance.Play3DSound("BabyDisparition", transform.position);
         FindObjectOfType<KeepScore>().ChangeScore(75);
         float xPOs = Random.Range(-10, 10);
         float yPos = Random.Range(-10, 10);
         GameObject scoreTextGo = Instantiate(scoreText, transform.position - new Vector3(xPOs, yPos, 0), Quaternion.identity).gameObject;
-        scoreText.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "-75";
+        scoreTextGo.GetComponent<Canvas>().worldCamera = FindObjectOfType<Camera>();
+        scoreTextGo.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "-75";
+        scoreTextGo.transform.LookAt(FindObjectOfType<PlayerWeapon>().transform.position);
         Destroy(scoreTextGo, 1f);
         Destroy(gameObject, 1f);
+        AudioManager.instance.Play3DSound("BabyDisparition", transform.position);
     }
 
     public void Hit(float stunTime)

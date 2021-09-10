@@ -520,7 +520,7 @@ MonoBehaviour:
   speedFollowBall: 3
   positionInHand: {fileID: 5346494659484570454}
   willIDie: 0
-  scoreText: {fileID: 5982773415201759043, guid: 9073c5f352f7d304fbfae60f60c0e743, type: 3}
+  scoreText: {fileID: 8476678770880449140, guid: a6c9754687247c44cb120a2af3bccc52, type: 3}
   fightPercentage: 20
   carryPercentage: 20
 --- !u!136 &919132147506370335
