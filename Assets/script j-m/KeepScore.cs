@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -23,7 +21,7 @@ public class KeepScore : MonoBehaviour
     {
         Score -= minus;
         scoreText.text = "Score : " + Score;
-        if(Score <= 0)
+        if (Score <= 0)
         {
             gameOver.SetActive(true);
             text.text = timer.minutes + ":" + timer.seconds;
@@ -31,6 +29,22 @@ public class KeepScore : MonoBehaviour
             GameManager.gameEnded = true;
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
+        }
+    }
+
+    void Update()
+    {
+        if (Time.timeScale == 1)
+        {
+            if (Score <= 0)
+            {
+                gameOver.SetActive(true);
+                text.text = (int)timer.minutes + ":" + (int)timer.seconds;
+                GameManager.gameEnded = true;
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
+                Time.timeScale = 0;
+            }
         }
     }
 

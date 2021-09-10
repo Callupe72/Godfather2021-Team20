@@ -462,7 +462,7 @@ MonoBehaviour:
     maxDist: 0
     volume: 0
     canLoop: 0
-  audioVolumeSlider: {fileID: 0}
+  audioVolumeSlider: {fileID: 2140719747}
   audioValueText: {fileID: 257359161}
 --- !u!4 &108075589
 Transform:
@@ -750,8 +750,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 30
-  m_fontSizeBase: 30
+  m_fontSize: 36
+  m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -816,8 +816,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 1.1000061, y: -16.699997}
-  m_SizeDelta: {x: -21.129822, y: -309.1954}
+  m_AnchoredPosition: {x: 138.22462, y: -11.2}
+  m_SizeDelta: {x: -295.3791, y: -381.4}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &258779723
 GameObject:
@@ -1288,8 +1288,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -104.9, y: -18.5}
-  m_SizeDelta: {x: -21.129822, y: -309.1954}
+  m_AnchoredPosition: {x: -189.99124, y: -7.899994}
+  m_SizeDelta: {x: -273.1123, y: -383.428}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &394963552
 MonoBehaviour:
