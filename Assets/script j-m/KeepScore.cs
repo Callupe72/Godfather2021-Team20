@@ -8,16 +8,17 @@ public class KeepScore : MonoBehaviour
     public static int Score = 500;
     public TextMeshProUGUI scoreText;
 
+    void Start()
+    {
+        Score = 500;
+        scoreText.text = "Score : " + Score;
+    }
+
     public void ChangeScore(int minus)
     {
         Score -= minus;
         scoreText.text = "Score : " + Score;
-        //if (Score<0)
 
     }
 
-    void OnGUI()
-    {
-        GUI.Box(new Rect(100, 100, 100, 100), Score.ToString());
-    }
 }

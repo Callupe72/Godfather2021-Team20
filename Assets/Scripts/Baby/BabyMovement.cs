@@ -1,6 +1,7 @@
 using PathCreation;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class BabyMovement : MonoBehaviour
@@ -319,7 +320,9 @@ public class BabyMovement : MonoBehaviour
         FindObjectOfType<KeepScore>().ChangeScore(75);
         float xPOs = Random.Range(-10, 10);
         float yPos = Random.Range(-10, 10);
-        Destroy(Instantiate(scoreText, new Vector3(xPOs, yPos, 0), Quaternion.identity), 1f);
+        GameObject scoreTextGo = Instantiate(scoreText, transform.position - new Vector3(xPOs, yPos, 0), Quaternion.identity).gameObject;
+        scoreText.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "-75";
+        Destroy(scoreTextGo, 1f);
         Destroy(gameObject, 1f);
     }
 
