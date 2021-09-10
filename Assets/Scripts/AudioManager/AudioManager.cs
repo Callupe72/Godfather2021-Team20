@@ -27,6 +27,8 @@ public class AudioManager : MonoBehaviour
     void Start()
     {
         LoadAudioValue();
+
+        AudioManager.instance.Play2DSound("BgMusic");
     }
 
     void LoadAudioValue()
