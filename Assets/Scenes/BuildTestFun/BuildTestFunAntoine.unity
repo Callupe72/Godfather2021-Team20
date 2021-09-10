@@ -3037,8 +3037,44 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: a5248c0ac614ebd4f9425b5665835277, type: 3}
     minDist: 0.1
     maxDist: 15
-    volume: 0.423
+    volume: 0.1
     canLoop: 1
+  - name: Throw0
+    clip: {fileID: 8300000, guid: ab8f38881be6fab43b0be383923e9d74, type: 3}
+    minDist: 0.1
+    maxDist: 15
+    volume: 0.423
+    canLoop: 0
+  - name: Throw1
+    clip: {fileID: 8300000, guid: d1ad04fd0ad8853498decd3ecfe6fe3c, type: 3}
+    minDist: 0.1
+    maxDist: 15
+    volume: 0.423
+    canLoop: 0
+  - name: BabyLaught0
+    clip: {fileID: 8300000, guid: 3d44c1d215c2d3840b136d28558f9631, type: 3}
+    minDist: 0.1
+    maxDist: 15
+    volume: 0.423
+    canLoop: 0
+  - name: BabyLaught
+    clip: {fileID: 8300000, guid: acac4611fb7baae48a505cb52c3483fb, type: 3}
+    minDist: 0.1
+    maxDist: 15
+    volume: 0.423
+    canLoop: 0
+  - name: BabyLaught2
+    clip: {fileID: 8300000, guid: 12e486ab4de8cae4f9cd496c72069493, type: 3}
+    minDist: 0.1
+    maxDist: 15
+    volume: 0.423
+    canLoop: 0
+  - name: BabyLaught3
+    clip: {fileID: 8300000, guid: 347e7f60a1405cd45a695f6d4915eda0, type: 3}
+    minDist: 0.1
+    maxDist: 15
+    volume: 0.423
+    canLoop: 0
   audioVolumeSlider: {fileID: 430470289}
   audioValueText: {fileID: 619041997}
 --- !u!4 &1075463088
