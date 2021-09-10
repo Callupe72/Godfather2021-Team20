@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Timer : MonoBehaviour
 {
@@ -10,6 +11,11 @@ public class Timer : MonoBehaviour
     public string currentText = "Time Remaining :";
     public string winningText = "You Won !";
     bool timerPlay = true;
+
+    public GameObject victoryScreen;
+    public Text textVictory;
+    public KeepScore score;
+
     void Update()
     {
         if (!timerPlay)
@@ -29,6 +35,10 @@ public class Timer : MonoBehaviour
         {
             timerText.text = winningText;
             timerPlay = false;
+
+            victoryScreen.SetActive(true);
+            textVictory.text = KeepScore.Score + " pts";
+
             return;
         }
     }

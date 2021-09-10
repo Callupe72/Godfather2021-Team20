@@ -97,7 +97,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 0}
+  m_LightingDataAsset: {fileID: 112000000, guid: e99c597e3ed6c774088062cf92c6c80f, type: 2}
   m_LightingSettings: {fileID: 0}
 --- !u!196 &4
 NavMeshSettings:
@@ -533,6 +533,7 @@ GameObject:
   - component: {fileID: 98030454}
   - component: {fileID: 98030456}
   - component: {fileID: 98030455}
+  - component: {fileID: 98030457}
   m_Layer: 5
   m_Name: PointInfo
   m_TagString: Untagged
@@ -580,7 +581,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: 6cf2d14c822a43d44964c9d0b6df24da, type: 3}
     m_FontSize: 31
     m_FontStyle: 1
     m_BestFit: 0
@@ -601,6 +602,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 98030453}
   m_CullTransparentMesh: 1
+--- !u!114 &98030457
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 98030453}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfabb0440166ab443bba8876756fdfa9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0.93333334, g: 0.3466231, b: 0.011764677, a: 0.5}
+  m_EffectDistance: {x: 4, y: -4}
+  m_UseGraphicAlpha: 1
 --- !u!1 &110193103
 GameObject:
   m_ObjectHideFlags: 0
@@ -1592,6 +1608,7 @@ GameObject:
   - component: {fileID: 176707069}
   - component: {fileID: 176707071}
   - component: {fileID: 176707070}
+  - component: {fileID: 176707072}
   m_Layer: 5
   m_Name: GameOverText
   m_TagString: Untagged
@@ -1639,7 +1656,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: 6cf2d14c822a43d44964c9d0b6df24da, type: 3}
     m_FontSize: 58
     m_FontStyle: 1
     m_BestFit: 0
@@ -1660,6 +1677,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 176707068}
   m_CullTransparentMesh: 1
+--- !u!114 &176707072
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 176707068}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfabb0440166ab443bba8876756fdfa9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0.93333334, g: 0.3466231, b: 0.011764677, a: 0.5}
+  m_EffectDistance: {x: 4, y: -4}
+  m_UseGraphicAlpha: 1
 --- !u!1 &188814744
 GameObject:
   m_ObjectHideFlags: 0
@@ -3032,7 +3064,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: 6cf2d14c822a43d44964c9d0b6df24da, type: 3}
     m_FontSize: 73
     m_FontStyle: 1
     m_BestFit: 0
@@ -3781,6 +3813,9 @@ MonoBehaviour:
   timerText: {fileID: 730963041}
   currentText: Time Remaining
   winningText: You Won !
+  victoryScreen: {fileID: 1615531771}
+  textVictory: {fileID: 488491489}
+  score: {fileID: 298496540}
 --- !u!1 &732603985
 GameObject:
   m_ObjectHideFlags: 0
@@ -5530,7 +5565,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1169498940
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8471,7 +8506,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1615531772
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11991,6 +12026,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Untagged
       objectReference: {fileID: 0}
+    - target: {fileID: 5630653816100054894, guid: 1772259548c18d34882b47955cc8bd1d, type: 3}
+      propertyPath: m_RootOrder
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 5916864518466296092, guid: 1772259548c18d34882b47955cc8bd1d, type: 3}
       propertyPath: m_Layer
       value: 7
@@ -12010,6 +12049,10 @@ PrefabInstance:
     - target: {fileID: 8581216499095147161, guid: 1772259548c18d34882b47955cc8bd1d, type: 3}
       propertyPath: m_IsKinematic
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9002845528060154044, guid: 1772259548c18d34882b47955cc8bd1d, type: 3}
+      propertyPath: m_RootOrder
+      value: 9
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1772259548c18d34882b47955cc8bd1d, type: 3}

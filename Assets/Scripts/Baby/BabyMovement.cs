@@ -388,6 +388,7 @@ public class BabyMovement : MonoBehaviour
     {
         goingToCenter = true;
         positionToGo = new Vector3(0, 0, 0);
+        transform.LookAt(positionToGo);
     }
 
     void RandomRotation()
