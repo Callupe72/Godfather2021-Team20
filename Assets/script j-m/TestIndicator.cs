@@ -15,7 +15,7 @@ public class TestIndicator : MonoBehaviour
         {
             DI_Systeme.CreateIndicator(this.transform);
         }
-        Destroy(this.gameObject, destroyTimer);
+        //Destroy(this.gameObject, destroyTimer);
     }
 
     
