@@ -29,7 +29,6 @@ public class Phone : MonoBehaviour
         {
             int i = Random.Range(0, 3);
             AudioManager.instance.Play3DSound("BabyLaught" + i, babies.transform.position);
-            Debug.Log("AHAHAHAHAH");
         }
 
         StartRinging();
@@ -39,12 +38,13 @@ public class Phone : MonoBehaviour
     {        
         actualModifierSpeed = multiplierSpeedFactor;
         actualModifierFight = multiplierFightFactor;
-
+        AudioManager.instance.Play3DSound("PhoneRinging", transform.position);
         animator.SetBool("isRingging", true);        
     }
 
     public void Hit()
     {
+        AudioManager.instance.StopSound("PhoneRinging");
         animator.SetBool("isRingging", false);
         actualModifierSpeed = 1;
         actualModifierFight = 1;

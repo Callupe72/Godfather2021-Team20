@@ -170,6 +170,10 @@ public class BabyMovement : MonoBehaviour
         {
             ChangeAnimation("IsRunning");
         }
+        else if(rb.velocity.magnitude > 3)
+        {
+            ChangeAnimation("IsWalinkg");
+        }
 
 
         for (int i = 0; i < babiesFight.Count; i++)
