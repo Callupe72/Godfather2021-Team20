@@ -68,6 +68,7 @@ public class BabyMovement : MonoBehaviour
     [HideInInspector] public bool willIDie;
 
     bool imChecking;
+    public Canvas scoreText;
 
     public enum CollisionResult
     {
@@ -136,7 +137,8 @@ public class BabyMovement : MonoBehaviour
         //}
         if (!imChecking)
         {
-            if (rb.velocity.magnitude <= 0)
+
+            if (rb.velocity.magnitude <0.25f && !isFighting)
             {
                 imChecking = true;
                 collisionResult = CollisionResult.none;
@@ -311,10 +313,14 @@ public class BabyMovement : MonoBehaviour
     {
         isDying = true;
         StartCoroutine(FindObjectOfType<CameraShakes>().Shake(.15f, .4f));
-        Destroy(gameObject, 1f);
         FindObjectOfType<Spawn>().SpawnABaby();
         ChangeAnimation("IsDying");
         AudioManager.instance.Play3DSound("BabyDisparition", transform.position);
+        FindObjectOfType<KeepScore>().ChangeScore(75);
+        float xPOs = Random.Range(-10, 10);
+        float yPos = Random.Range(-10, 10);
+        Destroy(Instantiate(scoreText, new Vector3(xPOs, yPos, 0), Quaternion.identity), 1f);
+        Destroy(gameObject, 1f);
     }
 
     public void Hit(float stunTime)
@@ -353,7 +359,6 @@ public class BabyMovement : MonoBehaviour
             isStun = false;
             GoToCenter();
             willIDie = false;
-
         }
         else
         {

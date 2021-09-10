@@ -7,7 +7,6 @@ public class PauseMenu : MonoBehaviour
 {
     public static bool _isInPause = false;
     public GameObject pauseMenu;
-
     void Start()
     {
         Time.timeScale = 1;

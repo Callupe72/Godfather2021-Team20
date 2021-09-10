@@ -3319,7 +3319,7 @@ MonoBehaviour:
     maxDist: 10
     volume: 0.423
     canLoop: 0
-  - name: Babyelect
+  - name: BabyElect
     clip: {fileID: 8300000, guid: 7b974772395e4684ca47024bd500c0c0, type: 3}
     minDist: 0.1
     maxDist: 38
@@ -3361,6 +3361,12 @@ MonoBehaviour:
     maxDist: 15
     volume: 0.423
     canLoop: 0
+  - name: BgMusic
+    clip: {fileID: 8300000, guid: a5248c0ac614ebd4f9425b5665835277, type: 3}
+    minDist: 0.1
+    maxDist: 15
+    volume: 0.423
+    canLoop: 1
   audioVolumeSlider: {fileID: 430470289}
   audioValueText: {fileID: 619041997}
 --- !u!4 &1075463088
