@@ -28,6 +28,9 @@ public class KeepScore : MonoBehaviour
             gameOver.SetActive(true);
             text.text = timer.minutes + ":" + timer.seconds;
             Time.timeScale = 0;
+            GameManager.gameEnded = true;
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
         }
     }
 
