@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class DammageIndicator : MonoBehaviour
@@ -13,7 +12,7 @@ public class DammageIndicator : MonoBehaviour
     {
         get
         {
-            if(canvasGroup == null)
+            if (canvasGroup == null)
             {
                 canvasGroup = GetComponent<CanvasGroup>();
                 if (canvasGroup == null)
@@ -43,7 +42,7 @@ public class DammageIndicator : MonoBehaviour
 
     }
 
-    public Transform Target { get; protected set;  } = null;
+    public Transform Target { get; protected set; } = null;
     private Transform player = null;
 
     private IEnumerator IE_Countdown = null;
@@ -51,6 +50,21 @@ public class DammageIndicator : MonoBehaviour
 
     private Quaternion tRot = Quaternion.identity;
     private Vector3 tPos = Vector3.zero;
+
+    void Update()
+    {
+        if (Target != null)
+        {
+            if (Target.gameObject.GetComponent<BabyMovement>().goingToCenter)
+            {
+                Destroy(gameObject);
+            }
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
 
     public void Register(Transform target, Transform player, System.Action unRegister)
     {
@@ -68,13 +82,13 @@ public class DammageIndicator : MonoBehaviour
         StartTimer();
     }
 
-    private void StartTimer() 
+    private void StartTimer()
     {
         if (IE_Countdown != null) { StopCoroutine(IE_Countdown); }
         IE_Countdown = Countdown();
         StartCoroutine(IE_Countdown);
-    
-    
+
+
     }
     IEnumerator RotateToTheTarget()
     {

@@ -1,6 +1,7 @@
 using PathCreation;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class BabyMovement : MonoBehaviour
@@ -65,8 +66,10 @@ public class BabyMovement : MonoBehaviour
     float fightStealMultiplier = 1f;
 
     bool doNotGoOnGround;
+    [HideInInspector] public bool willIDie;
 
     bool imChecking;
+    public Canvas scoreText;
 
     public enum CollisionResult
     {
@@ -79,6 +82,7 @@ public class BabyMovement : MonoBehaviour
 
     [Tooltip("Chance de 0 à la valeur")] [Range(0, 100)] public int fightPercentage = 20;
     [Tooltip("Chance de la valeur précédente à celle-ci")] [Range(0, 100)] public int carryPercentage = 50;
+    private bool isDying;
 
     void OnDrawGizmos()
     {
@@ -94,7 +98,7 @@ public class BabyMovement : MonoBehaviour
 
     }
 
-    void Start()
+    void OnEnable()
     {
         anim = GetComponent<Animator>();
         meshRenderer = GetComponent<MeshRenderer>();
@@ -106,6 +110,11 @@ public class BabyMovement : MonoBehaviour
 
     void Update()
     {
+        if (isDying)
+        {
+            return;
+        }
+
 
         Steal();
         //Si le bebe change de dir et veut die
@@ -129,13 +138,20 @@ public class BabyMovement : MonoBehaviour
         //}
         if (!imChecking)
         {
-            if (rb.velocity.magnitude <= 0)
+
+            if (rb.velocity.magnitude <0.25f && !isFighting)
             {
                 imChecking = true;
                 collisionResult = CollisionResult.none;
                 StartCoroutine(UnLockBaby());
             }
 
+        }
+
+        for (int i = 0; i < babiesFight.Count; i++)
+        {
+            if (babiesFight[i] == null)
+                babiesFight.RemoveAt(i);
         }
 
 
@@ -150,6 +166,10 @@ public class BabyMovement : MonoBehaviour
                 ChangeAnimation("IsWalking");
             }
         }
+        if (rb.velocity.magnitude > 11)
+        {
+            ChangeAnimation("IsRunning");
+        }
 
 
         for (int i = 0; i < babiesFight.Count; i++)
@@ -161,7 +181,7 @@ public class BabyMovement : MonoBehaviour
         if (collisionResult != CollisionResult.followBall)
             DetectBall();
 
-        if (!isStun)
+        if (!isStun && !willIDie)
         {
             switch (collisionResult)
             {
@@ -175,8 +195,13 @@ public class BabyMovement : MonoBehaviour
                         distanceToSeeCorner += speedIncreaseView / 10 * Time.deltaTime;
                     break;
                 case CollisionResult.fight:
-                    if (babiesFight.Count == 0)
-                        collisionResult = CollisionResult.none;
+                    {
+                        if (babiesFight.Count == 0)
+                            collisionResult = CollisionResult.none;
+                        else
+                            transform.LookAt(babiesFight[0].transform.position);
+
+                    }
                     break;
                 case CollisionResult.carry:
                     break;
@@ -187,6 +212,11 @@ public class BabyMovement : MonoBehaviour
                     RunningAfterBall();
                     break;
             }
+        }
+
+        if (goingToCenter)
+        {
+            GoingToCenter();
         }
 
         if (transform.rotation.eulerAngles.x != 0)
@@ -243,7 +273,7 @@ public class BabyMovement : MonoBehaviour
                     fightStealMultiplier = FindObjectOfType<ObjectToSteal>().fightMultiplier;
                     collisionResult = CollisionResult.none;
                     doNotGoOnGround = true;
-                    rb.velocity = new Vector3(rb.velocity.x + 10, rb.velocity.y + 10, rb.velocity.z + 10);
+                    rb.velocity = new Vector3(rb.velocity.x + 10, rb.velocity.y + 2, rb.velocity.z + 10);
                     transform.LookAt(transform.forward);
                     StartCoroutine(BackToGround());
                 }
@@ -280,18 +310,28 @@ public class BabyMovement : MonoBehaviour
         transform.LookAt(footballTransform.position);
     }
 
-    void Die()
+    public void Die()
     {
-        Destroy(gameObject, 0.5f);
+        isDying = true;
+        StartCoroutine(FindObjectOfType<CameraShakes>().Shake(.15f, .4f));
+        FindObjectOfType<Spawn>().SpawnABaby();
         ChangeAnimation("IsDying");
+        FindObjectOfType<KeepScore>().ChangeScore(75);
+        float xPOs = Random.Range(-10, 10);
+        float yPos = Random.Range(-10, 10);
+        GameObject scoreTextGo = Instantiate(scoreText, transform.position - new Vector3(xPOs, yPos, 0), Quaternion.identity).gameObject;
+        scoreTextGo.GetComponent<Canvas>().worldCamera = FindObjectOfType<Camera>();
+        scoreTextGo.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "-75";
+        scoreTextGo.transform.LookAt(FindObjectOfType<PlayerWeapon>().transform.position);
+        Destroy(scoreTextGo, 1f);
+        Destroy(gameObject, 1f);
         AudioManager.instance.Play3DSound("BabyDisparition", transform.position);
     }
 
     public void Hit(float stunTime)
     {
-
-
-        ChangeAnimation("IsStun");
+        if (GetComponent<TestIndicator>())
+            Destroy(GetComponent<TestIndicator>());
 
         if (objToSteal != null)
         {
@@ -319,16 +359,25 @@ public class BabyMovement : MonoBehaviour
         nearestCorner = null;
         doNotNeedToThink = false;
         StopAllCoroutines();
-        isStun = true;
-        StartCoroutine(HitTime(stunTime));
+        if (willIDie)
+        {
+            isStun = false;
+            GoToCenter();
+            willIDie = false;
+        }
+        else
+        {
+            ChangeAnimation("IsStun");
+            isStun = true;
+            StartCoroutine(HitTime(stunTime));
+        }
     }
 
     IEnumerator HitTime(float stunTime)
     {
         yield return new WaitForSeconds(stunTime);
         isStun = false;
-        if (nearestCorner == null)
-            WillIChangeTarget();
+        WillIChangeTarget();
         //else
         //    GoToCenter();
         ChangeAnimation("IsWalking");
@@ -337,10 +386,8 @@ public class BabyMovement : MonoBehaviour
 
     void GoToCenter()
     {
-        StopAllCoroutines();
         goingToCenter = true;
-        Vector3 oppositeDir = -transform.position;
-        positionToGo = new Vector3(oppositeDir.x, transform.position.y, oppositeDir.z) * (speedSeingCorner / 10);
+        positionToGo = new Vector3(0, 0, 0);
     }
 
     void RandomRotation()
@@ -445,8 +492,13 @@ public class BabyMovement : MonoBehaviour
         }
         else
         {
-            rb.velocity = positionToGo * (speedSeingCorner / 10 * phone.actualModifierSpeed);
+            transform.position = Vector3.MoveTowards(transform.position, positionToGo, speedSeingCorner / 10 * Time.deltaTime * phone.actualModifierSpeed);
         }
+    }
+
+    void GoingToCenter()
+    {
+        transform.position = Vector3.MoveTowards(transform.position, positionToGo, speedSeingCorner / 10 * Time.deltaTime * phone.actualModifierSpeed);
     }
 
     void GoToGround()
@@ -464,12 +516,10 @@ public class BabyMovement : MonoBehaviour
         yield return new WaitForSeconds(1f);
         ChangeAnimation("IsWalking");
         isLanding = false;
-
     }
 
     void OnCollisionEnter(Collision collision)
     {
-
         if (collision.gameObject.CompareTag("Baby"))
         {
             //StopAllCoroutines();
@@ -488,6 +538,9 @@ public class BabyMovement : MonoBehaviour
                 if (transform.position.x + transform.position.z > collision.transform.position.x + collision.transform.position.z)
                 {
                     int random = Random.Range(0, 100);
+
+                    if (phone == null)
+                        phone = FindObjectOfType<Phone>();
 
                     if (random < fightPercentage * phone.actualModifierFight)
                     {
@@ -538,6 +591,9 @@ public class BabyMovement : MonoBehaviour
         transform.LookAt(other.transform.position);
         other.transform.LookAt(transform.position);
         StartCoroutine(FightDie(other));
+
+        int i = Random.Range(0,3);
+        AudioManager.instance.Play3DSound("BabyCry" + i , transform.position);
     }
 
     IEnumerator FightDie(GameObject other)
@@ -545,8 +601,10 @@ public class BabyMovement : MonoBehaviour
         yield return new WaitForSeconds(timeBeforeDying);
         FindObjectOfType<Spawn>().SpawnABaby();
         FindObjectOfType<Spawn>().SpawnABaby();
+        AudioManager.instance.Play3DSound("BabyDisparition", transform.position);
         Destroy(other);
         Destroy(gameObject);
+
 
     }
 
@@ -563,10 +621,13 @@ public class BabyMovement : MonoBehaviour
 
         if (other.gameObject.CompareTag("Desk"))
         {
-            StartCoroutine(WillISteal());
-            collisionResult = CollisionResult.onDesk;
-            pathCreatorOnDesk = GameObject.Find("OnDeskPath").GetComponent<PathCreator>();
-            pathCreatorGoOnDesk = GameObject.Find("GoOnDeskPath").GetComponent<PathCreator>();
+            if (objToSteal == null)
+            {
+                StartCoroutine(WillISteal());
+                collisionResult = CollisionResult.onDesk;
+                pathCreatorOnDesk = GameObject.Find("OnDeskPath").GetComponent<PathCreator>();
+                pathCreatorGoOnDesk = GameObject.Find("GoOnDeskPath").GetComponent<PathCreator>();
+            }
         }
     }
 

@@ -16,7 +16,7 @@ public class Timer : MonoBehaviour
             return;
 
         seconds -= Time.deltaTime;
-        if (seconds > 9)
+        if (seconds >= 10)
             timerText.text = currentText + " 0" + (int)minutes + " : " + (int)seconds;
         else
             timerText.text = currentText + " 0" + (int)minutes + " : 0" + (int)seconds;
@@ -30,16 +30,6 @@ public class Timer : MonoBehaviour
             timerText.text = winningText;
             timerPlay = false;
             return;
-        }
-
-    }
-    private void OnGUI()
-    {
-        if (timeRemaining > 0)
-        {
-        }
-        else
-        {
         }
     }
 }

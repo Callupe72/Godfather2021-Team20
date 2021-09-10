@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 5634002101674495626}
   - component: {fileID: 8755037923345416495}
   - component: {fileID: 6801794240461616613}
+  - component: {fileID: 2116729901697200722}
+  - component: {fileID: 2591590023783924398}
   m_Layer: 0
   m_Name: rchair
   m_TagString: Untagged
@@ -25,9 +27,9 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5000173864297993264}
-  m_LocalRotation: {x: -0.634926, y: -0.31123787, z: -0.31123787, w: 0.634926}
+  m_LocalRotation: {x: -0.63492537, y: -0.3112391, z: -0.3112391, w: 0.63492537}
   m_LocalPosition: {x: -7.325371, y: 3.37, z: -3.469791}
-  m_LocalScale: {x: 100, y: 100, z: 100}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -81,3 +83,33 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!54 &2116729901697200722
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5000173864297993264}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!64 &2591590023783924398
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5000173864297993264}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 6255687079079774844, guid: 0230ba2727e82b4429b7a8574f61f680, type: 3}

@@ -8,9 +8,24 @@ public class Spawn : MonoBehaviour
     [Header("Component")]
     [SerializeField] GameObject baby;
     [SerializeField] GameObject[] spawnPoint;
+    public int babyNumber = 5;
 
     [Header("position")]
     int wichspawnPoint;
+
+    void Start()
+    {
+        for (int i = 0; i < 5; i++)
+        {
+            SpawnABaby();
+        }
+    }
+
+    void Update()
+    {
+        if (FindObjectsOfType<BabyMovement>().Length < babyNumber)
+            SpawnABaby();
+    }
 
     public void SpawnABaby()
     {

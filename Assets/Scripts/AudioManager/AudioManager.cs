@@ -27,6 +27,8 @@ public class AudioManager : MonoBehaviour
     void Start()
     {
         LoadAudioValue();
+
+        AudioManager.instance.Play2DSound("BgMusic");
     }
 
     void LoadAudioValue()
@@ -61,6 +63,7 @@ public class AudioManager : MonoBehaviour
 
         source2D.clip = s.clip;
         source2D.loop = s.canLoop;
+        source2D.volume = s.volume * (audioVolume / 100);
         source2D.PlayOneShot(source2D.clip);
 
 

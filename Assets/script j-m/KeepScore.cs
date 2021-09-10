@@ -1,25 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class KeepScore : MonoBehaviour
 {
-
     public static int Score = 500;
-    // Start is called before the first frame update
+    public TextMeshProUGUI scoreText;
+
     void Start()
     {
-        
+        Score = 500;
+        scoreText.text = "Score : " + Score;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void ChangeScore(int minus)
     {
-        
+        Score -= minus;
+        scoreText.text = "Score : " + Score;
+
     }
 
-    private void OnGUI()
-    {
-        GUI.Box(new Rect(100, 100, 100, 100), Score.ToString());
-    }
 }

@@ -181,6 +181,7 @@ MonoBehaviour:
   camMultiplier: 10
   postProcess: {fileID: 1782702141}
   distanceSound: 10
+  weapon: []
 --- !u!136 &8295816
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -838,6 +839,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cornerRadius: 2
   timeBeforeKill: 1
+  eclairAll: {fileID: 0}
+  CameraShakes: {fileID: 0}
 --- !u!1 &165011859
 GameObject:
   m_ObjectHideFlags: 0
@@ -1757,6 +1760,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cornerRadius: 2
   timeBeforeKill: 1
+  eclairAll: {fileID: 0}
+  CameraShakes: {fileID: 0}
 --- !u!1 &541981497
 GameObject:
   m_ObjectHideFlags: 0
@@ -4210,6 +4215,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cornerRadius: 2
   timeBeforeKill: 1
+  eclairAll: {fileID: 0}
+  CameraShakes: {fileID: 0}
 --- !u!1 &1415187867
 GameObject:
   m_ObjectHideFlags: 0
@@ -4271,7 +4278,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 706795349077221415, guid: 7940e3078035ab84da3ea2de667cd419, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.277
+      value: 0.75
       objectReference: {fileID: 0}
     - target: {fileID: 706795349077221415, guid: 7940e3078035ab84da3ea2de667cd419, type: 3}
       propertyPath: m_LocalPosition.z
@@ -4420,6 +4427,7 @@ MonoBehaviour:
   - {fileID: 1562263341}
   - {fileID: 541981497}
   - {fileID: 1245485003}
+  babyNumber: 5
 --- !u!4 &1516811600
 Transform:
   m_ObjectHideFlags: 0
@@ -4867,7 +4875,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
 --- !u!1 &1555778864
 GameObject:
@@ -5144,6 +5152,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cornerRadius: 2
   timeBeforeKill: 1
+  eclairAll: {fileID: 0}
+  CameraShakes: {fileID: 0}
 --- !u!1 &1571700611
 GameObject:
   m_ObjectHideFlags: 0
@@ -6428,6 +6438,7 @@ MonoBehaviour:
   actualModifierSpeed: 1
   multiplierFightFactor: 1.25
   actualModifierFight: 1
+  animator: {fileID: 0}
 --- !u!65 &1924376010
 BoxCollider:
   m_ObjectHideFlags: 0
